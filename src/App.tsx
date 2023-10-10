@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router,  Route, Link, Routes } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-// import { Home, About } from './pages';
-import 'tailwindcss/tailwind.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+// import { HomePage } from './pages/HomePage/HomePage';
+import { MainLayout } from './layouts/MainLayout';
+
 
 function Home() {
   return (
@@ -22,38 +22,19 @@ function About() {
   );
 }
 
-function App() {
+
+function App(): JSX.Element {
   return (
-    <Router>
-      <div className="App">
-        <AppBar position="static" className="bg-blue-500">
-          <Toolbar>
-            {/* <img src={logo} alt="logo" className="h-2 w-2 mr-2" /> */}
-            <Typography variant="h6" className="flex-grow">
-              My App
-            </Typography>
-            <nav>
-              <ul className="flex space-x-4">
-                <li>
-                  <Button component={Link} to="/" color="inherit">
-                    Home
-                  </Button>
-                </li>
-                <li>
-                  <Button component={Link} to="/about" color="inherit">
-                    About
-                  </Button>
-                </li>
-              </ul>
-            </nav>
-          </Toolbar>
-        </AppBar>
-  <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/about" element={<About />} />
-  </Routes>
-      </div>
-    </Router>
+      <MainLayout>
+            <BrowserRouter>
+        <Routes>
+          <Route  path="/" Component={Home} />
+          <Route path='/about' Component={About}/>
+          {/* <Route path="/analytics" component={AnalyticsPage} /> */}
+          {/* Add other routes */}
+        </Routes>
+        </BrowserRouter>
+      </MainLayout>
   );
 }
 

@@ -1,5 +1,12 @@
 {
   "compilerOptions": {
+      "baseUrl": "./src",
+      "paths": {
+        "@components/*": ["components/*"],
+        "@layouts/*": ["layouts/*"],
+        "@pages/*": ["pages/*"]
+        // Add more path mappings as needed
+      },
     "target": "es5",
     "lib": [
       "dom",
@@ -22,5 +29,6 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  
 }
