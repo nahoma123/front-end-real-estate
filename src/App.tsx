@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router,  Route, Link, Routes } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 // import { Home, About } from './pages';
-import logo from './logo.svg';
 import 'tailwindcss/tailwind.css';
 
 function Home() {
@@ -29,7 +28,7 @@ function App() {
       <div className="App">
         <AppBar position="static" className="bg-blue-500">
           <Toolbar>
-            <img src={logo} alt="logo" className="h-2 w-2 mr-2" />
+            {/* <img src={logo} alt="logo" className="h-2 w-2 mr-2" /> */}
             <Typography variant="h6" className="flex-grow">
               My App
             </Typography>
@@ -49,10 +48,10 @@ function App() {
             </nav>
           </Toolbar>
         </AppBar>
-        <Routes>
-          <Route path="/" Component={Home} />
-          <Route path="/about" Component={About} />
-        </Routes>
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/about" element={<About />} />
+  </Routes>
       </div>
     </Router>
   );
