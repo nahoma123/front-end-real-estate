@@ -1,13 +1,7 @@
 import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  Grid,
-  styled,
-} from "@mui/material";
+import { AppBar, Toolbar, Button, Grid, styled } from "@mui/material";
 import LogoImg from "../logo/image";
-import LoginIcon from '@mui/material/Icon';
+import LoginIcon from "@mui/material/Icon";
 const StyledAppBar = styled(AppBar)({
   backgroundColor: "#fff",
   color: "#fff",
@@ -43,10 +37,15 @@ const Header: React.FC = () => {
           <Grid md={2} sm={0}>
             <LogoImg />
           </Grid>
-          <StyledGrid container direction="row" md={8} sm={8} >
+          <StyledGrid container direction="row" md={8} sm={8}>
             <Grid md={10}></Grid>
-            <Grid md={2}   justifyContent="center" alignItems="center" container>
-              <StyledSellButton>Sign In/ Register <LoginIcon/></StyledSellButton>
+            <Grid md={2} justifyContent="center" alignItems="center" container>
+              <StyledSellButton>
+                <Grid container>
+                  Sign In/ Register
+                  <LoginIcon fontSize="small" />
+                </Grid>
+              </StyledSellButton>
             </Grid>
             {/* docs */}
           </StyledGrid>
