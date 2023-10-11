@@ -1,17 +1,10 @@
 import { createTheme, ThemeProvider } from "@mui/material";
+import LandingPage from "./pages/landing/landing";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import { HomePage } from './pages/HomePage/HomePage';
 import { MainLayout } from "./layouts/MainLayout";
 
-function Home() {
-  return (
-    <div>
-      <h2>Home Page</h2>
-      <p>Welcome to the home page!</p>
-    </div>
-  );
-}
 
 function About() {
   return (
@@ -36,7 +29,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Roboto, Arial, sans-serif', // Set your custom font family
+    fontFamily: "'Open Sans', sans-serif", // Set your custom font family
     // ... other typography options
   },
   // ... other theme options
@@ -48,7 +41,7 @@ function App(): JSX.Element {
     <MainLayout>
       <BrowserRouter>
         <Routes>
-          <Route path="/" Component={Home} />
+          <Route path="/" Component={LandingPage} />
           <Route path="/about" Component={About} />
         </Routes>
       </BrowserRouter>
