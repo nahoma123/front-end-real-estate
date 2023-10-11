@@ -1,8 +1,7 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import { HomePage } from './pages/HomePage/HomePage';
-import { MainLayout } from './layouts/MainLayout';
-
+import { MainLayout } from "./layouts/MainLayout";
 
 function Home() {
   return (
@@ -22,19 +21,16 @@ function About() {
   );
 }
 
-
 function App(): JSX.Element {
   return (
-      <MainLayout>
-            <BrowserRouter>
+    <MainLayout>
+      <BrowserRouter>
         <Routes>
-          <Route  path="/" Component={Home} />
-          <Route path='/about' Component={About}/>
-          {/* <Route path="/analytics" component={AnalyticsPage} /> */}
-          {/* Add other routes */}
+          <Route path="/" Component={Home} />
+          <Route path="/about" Component={About} />
         </Routes>
-        </BrowserRouter>
-      </MainLayout>
+      </BrowserRouter>
+    </MainLayout>
   );
 }
 

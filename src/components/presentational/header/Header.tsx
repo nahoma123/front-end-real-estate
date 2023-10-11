@@ -2,28 +2,26 @@ import React from "react";
 import {
   AppBar,
   Toolbar,
-  Typography,
   Button,
-  IconButton,
   Grid,
   styled,
 } from "@mui/material";
-import NotificationsIcon from "@mui/material/Icon";
-
+import LogoImg from "../logo/image";
+import LoginIcon from '@mui/material/Icon';
 const StyledAppBar = styled(AppBar)({
-  backgroundColor: "#033E6B",
+  backgroundColor: "#fff",
   color: "#fff",
   boxShadow: "none",
 });
 
-const StyledLogo = styled(Typography)`
-  && {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-  }
-`;
+// const StyledLogo = styled(Typography)`
+//   && {
+//     font-size: 1.5rem;
+//     font-weight: bold;
+//     color: #fff;
+//     text-decoration: none;
+//   }
+// `;
 
 const StyledSellButton = styled(Button)`
   && {
@@ -35,23 +33,24 @@ const StyledSellButton = styled(Button)`
   }
 `;
 
-const Header: React.FC = () => {
+const StyledGrid = styled(Grid)({});
 
+const Header: React.FC = () => {
   return (
     <StyledAppBar position="static">
       <Toolbar>
-        <Grid container  component="div">
-          <Grid md={6} sm={6}>
-            {/* docs */}
-            <StyledLogo variant="h6">Strike</StyledLogo>
+        <Grid container component="div">
+          <Grid md={2} sm={0}>
+            <LogoImg />
           </Grid>
-          <Grid md={6} sm={6}>
+          <StyledGrid container direction="row" md={8} sm={8} >
+            <Grid md={10}></Grid>
+            <Grid md={2}   justifyContent="center" alignItems="center" container>
+              <StyledSellButton>Sign In/ Register <LoginIcon/></StyledSellButton>
+            </Grid>
             {/* docs */}
-            <StyledSellButton>Sell Your House</StyledSellButton>
-            <IconButton color="inherit">
-              <NotificationsIcon />
-            </IconButton>
-          </Grid>
+          </StyledGrid>
+          <Grid md={2} sm={0}></Grid>
         </Grid>
       </Toolbar>
     </StyledAppBar>
