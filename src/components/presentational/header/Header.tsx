@@ -10,19 +10,10 @@ const StyledAppBar = styled(AppBar)({
   boxShadow: "none",
 });
 
-// const StyledLogo = styled(Typography)`
-//   && {
-//     font-size: 1.5rem;
-//     font-weight: bold;
-//     color: #fff;
-//     text-decoration: none;
-//   }
-// `;
 
 const StyledSellButton = styled(Button)`
   && {
     background-color: #a5a54a;
-
     color: #fff;
     &:hover {
       background-color: #948c1e;
@@ -43,7 +34,7 @@ const Header: React.FC = () => {
           <StyledGrid container item direction="row" md={8} sm={8}>
             <Grid item container md={10}>
               <Grid
-              item
+                item
                 md={2}
                 justifyContent="center"
                 alignItems="center"

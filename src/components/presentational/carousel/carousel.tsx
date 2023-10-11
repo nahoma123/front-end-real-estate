@@ -1,45 +1,50 @@
-import React from 'react';
-import Carousel from 'react-material-ui-carousel';
-import { Paper, Container, Typography, Box, Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import React from "react";
+import Carousel from "react-material-ui-carousel";
+import { Paper, Container, Typography, Box, Button, Grid } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const CarouselItem = styled(Paper)({
-  position: 'relative',
-  '&:hover img': {
-    filter: 'blur(4px)',
+  position: "relative",
+  textAlign: "center", // Add this line
+  "&:hover img": {
+    filter: "blur(1px)",
   },
 });
 
-const CarouselImage = styled('img')({
-  transition: 'filter 0.3s ease-in-out',
+const CarouselImage = styled("img")({
+  transition: "filter 0.5s ease-in-out",
+  height: "450px", // set a fixed height
+  width: "100%", // set a fixed width
 });
 
-const CarouselOverlay = styled(Box)({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  textAlign: 'center',
+const CarouselOverlay = styled(Grid)({
+  height: "100%",
+  width: "25%",
+  position: "absolute",
+  justifyContent: "center", // added this
+  left: "7%", // changed from right to left
+  top: "0%",
+  textAlign: "center",
   zIndex: 2,
-  padding: '1rem',
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  backdropFilter: 'blur(4px)',
+  padding: "1rem",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
 });
 
 const AdvCarousel: React.FC = () => {
   const carouselItems = [
     {
       image:
-        "https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1896&q=80",
-      title: "Slide 1",
-      description: "Description for slide 1",
+        "https://plus.unsplash.com/premium_photo-1675324517011-24d2c741c22f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      title: "We provide Free valuation",
+      description: "The valuation is covered by us",
     },
     {
       image:
         "https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1896&q=80",
-      title: "Slide 2",
-      description: "Description for slide 2",
+      title: "We provide Free Onboarding",
+      description: "And we will alway do",
     },
+
     // Add more slides as needed
   ];
 
@@ -47,7 +52,7 @@ const AdvCarousel: React.FC = () => {
     <Container maxWidth="lg">
       <Carousel>
         {carouselItems.map((item, index) => (
-          <Item key={index} item={item} />
+          <Item  key={index} item={item} />
         ))}
       </Carousel>
     </Container>
@@ -58,16 +63,22 @@ const Item: React.FC<{ item: any }> = ({ item }) => {
   return (
     <CarouselItem>
       <CarouselImage src={item.image} alt={item.title} />
-      <CarouselOverlay>
-        <Typography variant="h5" gutterBottom color="white">
-          {item.title}
-        </Typography>
-        <Typography variant="body1" color="white">
-          {item.description}
-        </Typography>
-        <Button className="CheckButton" variant="contained" color="primary">
-          View
-        </Button>
+      <CarouselOverlay item container direction={"column"}>
+        <Grid>
+          <Typography variant="h5" gutterBottom color="white">
+            {item.title}
+          </Typography>
+        </Grid>
+        <Grid>
+          <Typography variant="body1" color="white">
+            {item.description}
+          </Typography>
+        </Grid>
+        <Grid container item padding={"5px"} justifyContent="center">
+          <Button className="CheckButton" variant="contained" color="primary">
+            Book a Free Valuation
+          </Button>
+        </Grid>
       </CarouselOverlay>
     </CarouselItem>
   );
