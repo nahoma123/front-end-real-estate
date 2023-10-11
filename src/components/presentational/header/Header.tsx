@@ -22,7 +22,7 @@ const StyledAppBar = styled(AppBar)({
 const StyledSellButton = styled(Button)`
   && {
     background-color: #a5a54a;
-    
+
     color: #fff;
     &:hover {
       background-color: #948c1e;
@@ -37,12 +37,13 @@ const Header: React.FC = () => {
     <StyledAppBar position="static">
       <Toolbar>
         <Grid container component="div">
-          <Grid md={2} sm={0}>
+          <Grid item md={2} sm={0}>
             <LogoImg />
           </Grid>
-          <StyledGrid container direction="row" md={8} sm={8}>
-            <Grid container md={10}>
+          <StyledGrid container item direction="row" md={8} sm={8}>
+            <Grid item container md={10}>
               <Grid
+              item
                 md={2}
                 justifyContent="center"
                 alignItems="center"
@@ -51,6 +52,7 @@ const Header: React.FC = () => {
                 <HeaderMenu label="Selling" menuItems={<MegaMenu />} />
               </Grid>
               <Grid
+                item
                 md={2}
                 justifyContent="center"
                 alignItems="center"
@@ -60,6 +62,7 @@ const Header: React.FC = () => {
               </Grid>
 
               <Grid
+                item
                 md={2}
                 justifyContent="center"
                 alignItems="center"
@@ -69,6 +72,7 @@ const Header: React.FC = () => {
               </Grid>
 
               <Grid
+                item
                 md={2}
                 justifyContent="center"
                 alignItems="center"
@@ -77,7 +81,13 @@ const Header: React.FC = () => {
                 <HeaderMenu label="Selling" menuItems={<MegaMenu />} />
               </Grid>
             </Grid>
-            <Grid md={2} justifyContent="center" alignItems="center" container>
+            <Grid
+              item
+              md={2}
+              justifyContent="center"
+              alignItems="center"
+              container
+            >
               <StyledSellButton variant="contained">
                 <Grid justifyContent="center" alignItems="center" container>
                   Sign In/ Register
@@ -87,7 +97,7 @@ const Header: React.FC = () => {
             </Grid>
             {/* docs */}
           </StyledGrid>
-          <Grid md={2} sm={0}></Grid>
+          <Grid item md={2} sm={0}></Grid>
         </Grid>
       </Toolbar>
     </StyledAppBar>

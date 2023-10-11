@@ -23,6 +23,7 @@ function About() {
 }
 
 const theme = createTheme({
+  
   palette: {
     primary: {
       main: '#948c1e', 

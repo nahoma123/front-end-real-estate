@@ -30,6 +30,8 @@ const StyledDropdown = styled(Button)(({ theme }) => ({
   },
 }));
 
+
+
 interface HeaderMenuProps {
   label: string;
   menuItems: ReactNode;
@@ -40,15 +42,8 @@ const HeaderMenu: React.FC<HeaderMenuProps> = ({ label, menuItems }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (isOpen) {
-      // Close the current menu if it's already open
-      setAnchorEl(null);
-      setIsOpen(false);
-    } else {
-      // Open the menu
-      setAnchorEl(event.currentTarget);
-      setIsOpen(true);
-    }
+    setAnchorEl(event.currentTarget);
+    setIsOpen(!isOpen);
   };
 
   const handleClose = () => {
@@ -63,7 +58,7 @@ const HeaderMenu: React.FC<HeaderMenuProps> = ({ label, menuItems }) => {
         aria-controls={isOpen ? "fade-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={isOpen ? "true" : undefined}
-        onMouseOver={handleClick}
+        onClick={handleClick}
         sx={{ color: "white" }}
         endIcon={
           <ArrowDropDownIcon sx={{ color: isOpen ? "#948c1e" : "black" }} />
