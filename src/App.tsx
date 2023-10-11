@@ -1,3 +1,4 @@
+import { createTheme, ThemeProvider } from "@mui/material";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import { HomePage } from './pages/HomePage/HomePage';
@@ -21,8 +22,28 @@ function About() {
   );
 }
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#948c1e', 
+    },
+    secondary: {
+      main: '#ff8800', 
+    },
+    text: {
+      primary: '#333',
+    },
+  },
+  typography: {
+    fontFamily: 'Roboto, Arial, sans-serif', // Set your custom font family
+    // ... other typography options
+  },
+  // ... other theme options
+}); // Create your theme instance
+
 function App(): JSX.Element {
   return (
+    <ThemeProvider theme={theme}>
     <MainLayout>
       <BrowserRouter>
         <Routes>
@@ -31,6 +52,7 @@ function App(): JSX.Element {
         </Routes>
       </BrowserRouter>
     </MainLayout>
+    </ThemeProvider>
   );
 }
 

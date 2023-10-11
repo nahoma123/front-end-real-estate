@@ -1,7 +1,9 @@
 import React from "react";
 import { AppBar, Toolbar, Button, Grid, styled } from "@mui/material";
 import LogoImg from "../logo/image";
-import LoginIcon from "@mui/material/Icon";
+import LoginIcon from "@mui/icons-material/Login";
+import HeaderMenu from "../header_menu/header_menu";
+import MegaMenu from "../header_menu/sample_menu";
 const StyledAppBar = styled(AppBar)({
   backgroundColor: "#fff",
   color: "#fff",
@@ -19,10 +21,11 @@ const StyledAppBar = styled(AppBar)({
 
 const StyledSellButton = styled(Button)`
   && {
-    background-color: #ff5722;
+    background-color: #a5a54a;
+    
     color: #fff;
     &:hover {
-      background-color: #e64a19;
+      background-color: #948c1e;
     }
   }
 `;
@@ -38,12 +41,47 @@ const Header: React.FC = () => {
             <LogoImg />
           </Grid>
           <StyledGrid container direction="row" md={8} sm={8}>
-            <Grid md={10}></Grid>
+            <Grid container md={10}>
+              <Grid
+                md={2}
+                justifyContent="center"
+                alignItems="center"
+                container
+              >
+                <HeaderMenu label="Selling" menuItems={<MegaMenu />} />
+              </Grid>
+              <Grid
+                md={2}
+                justifyContent="center"
+                alignItems="center"
+                container
+              >
+                <HeaderMenu label="Buying" menuItems={<MegaMenu />} />
+              </Grid>
+
+              <Grid
+                md={2}
+                justifyContent="center"
+                alignItems="center"
+                container
+              >
+                <HeaderMenu label="Why Us" menuItems={<MegaMenu />} />
+              </Grid>
+
+              <Grid
+                md={2}
+                justifyContent="center"
+                alignItems="center"
+                container
+              >
+                <HeaderMenu label="Selling" menuItems={<MegaMenu />} />
+              </Grid>
+            </Grid>
             <Grid md={2} justifyContent="center" alignItems="center" container>
-              <StyledSellButton>
-                <Grid container>
+              <StyledSellButton variant="contained">
+                <Grid justifyContent="center" alignItems="center" container>
                   Sign In/ Register
-                  <LoginIcon fontSize="small" />
+                  <LoginIcon fontSize="small" sx={{ padding: "2px" }} />
                 </Grid>
               </StyledSellButton>
             </Grid>
