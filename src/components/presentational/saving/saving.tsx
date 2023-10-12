@@ -20,7 +20,7 @@ const SavingsCalculator = () => {
         See how much you could save when you sell your home for free
       </Typography>
       <Box marginTop={5}>
-        <Typography variant="subtitle1">
+        <Typography variant="h6">
           Savings based on a high street commission of {commissionRate}%:
         </Typography>
       </Box>
@@ -42,7 +42,7 @@ const SavingsCalculator = () => {
         />
       </Box>
       <Box marginTop={2}>
-        <Typography variant="subtitle1" gutterBottom>
+        <Typography variant="h6" gutterBottom>
           Slide to set your property value: £{propertyValue.toLocaleString()}
         </Typography>
       </Box>

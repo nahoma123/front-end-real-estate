@@ -4,7 +4,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import { HomePage } from './pages/HomePage/HomePage';
 import { MainLayout } from "./layouts/MainLayout";
-
+import { ModalProvider } from "context/modal_container";
 
 function About() {
   return (
@@ -16,16 +16,15 @@ function About() {
 }
 
 const theme = createTheme({
-  
   palette: {
     primary: {
-      main: '#948c1e', 
+      main: "#948c1e",
     },
     secondary: {
-      main: '#ff8800', 
+      main: "#ff8800",
     },
     text: {
-      primary: '#333',
+      primary: "#333",
     },
   },
   typography: {
@@ -38,14 +37,16 @@ const theme = createTheme({
 function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
-    <MainLayout>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" Component={LandingPage} />
-          <Route path="/about" Component={About} />
-        </Routes>
-      </BrowserRouter>
-    </MainLayout>
+      <ModalProvider>
+        <MainLayout>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" Component={LandingPage} />
+              <Route path="/about" Component={About} />
+            </Routes>
+          </BrowserRouter>
+        </MainLayout>
+      </ModalProvider>
     </ThemeProvider>
   );
 }

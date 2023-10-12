@@ -30,8 +30,6 @@ const StyledDropdown = styled(Button)(({ theme }) => ({
   },
 }));
 
-
-
 interface HeaderMenuProps {
   label: string;
   menuItems: ReactNode;
@@ -82,4 +80,4 @@ const HeaderMenu: React.FC<HeaderMenuProps> = ({ label, menuItems }) => {
   );
 };
 
-export default HeaderMenu;
+export { HeaderMenu, StyledDropdownText, StyledDropdown };

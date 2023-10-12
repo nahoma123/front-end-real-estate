@@ -1,15 +1,35 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { AppBar, Toolbar, Button, Grid, styled } from "@mui/material";
+import OnboardingModal from "../../presentational/model/onboarding_call";
+
 import LogoImg from "../logo/image";
 import LoginIcon from "@mui/icons-material/Login";
-import HeaderMenu from "../header_menu/header_menu";
+import {
+  StyledDropdownText,
+  HeaderMenu,
+  StyledDropdown,
+} from "../header_menu/header_menu";
 import MegaMenu from "../header_menu/sample_menu";
+import { ModalContext, ModalProvider } from "../../../context/modal_container";
 const StyledAppBar = styled(AppBar)({
   backgroundColor: "#fff",
   color: "#fff",
   boxShadow: "none",
 });
 
+const StyledButton2 = styled(Button)({
+  height: "60%",
+  fontFamily: "Open Sans",
+  margin: "0px",
+  fontWeight: "bold",
+  backgroundColor: "#948c1e45",
+  color: "#948c1e",
+  paddingLeft: "10px",
+  paddingRight: "10px",
+  "&:hover": {
+    color: "#877e0f", // Set the background color on hover
+  },
+});
 
 const StyledSellButton = styled(Button)`
   && {
@@ -24,6 +44,13 @@ const StyledSellButton = styled(Button)`
 const StyledGrid = styled(Grid)({});
 
 const Header: React.FC = () => {
+  const { openModal } = useContext(ModalContext);
+
+  const handleOpenModal = () => {
+    console.log("tesint");
+    openModal();
+  };
+
   return (
     <StyledAppBar position="static">
       <Toolbar>
@@ -32,7 +59,7 @@ const Header: React.FC = () => {
             <LogoImg />
           </Grid>
           <StyledGrid container item direction="row" md={8} sm={8}>
-            <Grid item container md={10}>
+            <Grid item container>
               <Grid
                 item
                 md={2}
@@ -64,31 +91,42 @@ const Header: React.FC = () => {
 
               <Grid
                 item
-                md={2}
+                md={3}
                 justifyContent="center"
                 alignItems="center"
                 container
               >
-                <HeaderMenu label="Selling" menuItems={<MegaMenu />} />
+                <StyledDropdown>
+                  <StyledDropdownText>Find a property</StyledDropdownText>
+                </StyledDropdown>
               </Grid>
-            </Grid>
-            <Grid
-              item
-              md={2}
-              justifyContent="center"
-              alignItems="center"
-              container
-            >
-              <StyledSellButton variant="contained">
-                <Grid justifyContent="center" alignItems="center" container>
-                  Sign In/ Register
-                  <LoginIcon fontSize="small" sx={{ padding: "2px" }} />
-                </Grid>
-              </StyledSellButton>
+
+              <Grid
+                item
+                md={3}
+                justifyContent="center"
+                alignItems="center"
+                container
+              >
+                <StyledButton2 onClick={handleOpenModal}>
+                  Book Onboarding call
+                </StyledButton2>
+              </Grid>
             </Grid>
             {/* docs */}
           </StyledGrid>
-          <Grid item md={2} sm={0}></Grid>
+          <Grid
+            container
+            item
+            md={2}
+            sm={0}
+            justifyContent="center"
+            alignContent={"center"}
+          >
+            <StyledButton2 endIcon={<LoginIcon fontSize="small" />}>
+              Sign In/ Register
+            </StyledButton2>
+          </Grid>
         </Grid>
       </Toolbar>
     </StyledAppBar>

@@ -37,12 +37,14 @@ const AdvCarousel: React.FC = () => {
         "https://plus.unsplash.com/premium_photo-1675324517011-24d2c741c22f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
       title: "We provide Free valuation",
       description: "The valuation is covered by us",
+      buttonLabel: "Book Free Valuation",
     },
     {
       image:
         "https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1896&q=80",
       title: "We provide Free Onboarding",
       description: "And we will alway do",
+      buttonLabel: "Check our Services",
     },
 
     // Add more slides as needed
@@ -52,10 +54,18 @@ const AdvCarousel: React.FC = () => {
     <Container maxWidth="lg">
       <Carousel>
         {carouselItems.map((item, index) => (
-          <Item  key={index} item={item} />
+          <Item key={index} item={item} />
         ))}
       </Carousel>
     </Container>
+  );
+};
+
+const CarouselButton: React.FC<{ label: any }> = ({ label }) => {
+  return (
+    <Button className="CheckButton" variant="contained" color="primary">
+      {label}
+    </Button>
   );
 };
 
@@ -75,9 +85,7 @@ const Item: React.FC<{ item: any }> = ({ item }) => {
           </Typography>
         </Grid>
         <Grid container item padding={"5px"} justifyContent="center">
-          <Button className="CheckButton" variant="contained" color="primary">
-            Book a Free Valuation
-          </Button>
+          <CarouselButton label={item.buttonLabel} />
         </Grid>
       </CarouselOverlay>
     </CarouselItem>
