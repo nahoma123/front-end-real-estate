@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import { HomePage } from './pages/HomePage/HomePage';
 import { MainLayout } from "./layouts/MainLayout";
 import { ModalProvider } from "context/modal_container";
+import { OnboardingModalWrapper } from "./components/presentational/model/onboarding_call";
 
 function About() {
   return (
@@ -37,16 +38,14 @@ const theme = createTheme({
 function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
-      <ModalProvider>
-        <MainLayout>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" Component={LandingPage} />
-              <Route path="/about" Component={About} />
-            </Routes>
-          </BrowserRouter>
-        </MainLayout>
-      </ModalProvider>
+      <MainLayout>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" Component={LandingPage} />
+            <Route path="/about" Component={About} />
+          </Routes>
+        </BrowserRouter>
+      </MainLayout>
     </ThemeProvider>
   );
 }

@@ -52,7 +52,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <StyledAppBar position="static">
+    <StyledAppBar position="fixed">
       <Toolbar>
         <Grid container component="div">
           <Grid item md={2} sm={0}>
