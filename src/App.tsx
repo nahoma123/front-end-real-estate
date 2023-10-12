@@ -35,6 +35,7 @@ const theme = createTheme({
   // ... other theme options
 }); // Create your theme instance
 
+
 function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
