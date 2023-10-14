@@ -4,6 +4,7 @@ import AdvCarousel from "../../components/presentational/carousel/carousel";
 import SavingsCalculator from "../../components/presentational/saving/saving";
 import ImgFixedHeight from "../../components/presentational/image/fixed_height_img";
 import { OnboardingModalWrapper } from "../../components/presentational/model/onboarding_call";
+import { primaryColor } from "../../styles/color";
 
 const LandingPage: React.FC = () => {
   let headerImg: string =
@@ -21,9 +22,23 @@ const LandingPage: React.FC = () => {
             >
               Welcome to FreeLets
             </Typography>
-            <Typography variant="h6" align="left" gutterBottom>
-              At our estate agency, we provide a comprehensive range of services
-              without charging any fees.
+            <Typography variant="h5" align="left" style={{ display: "inline" }}>
+              See how much you could save per year when you let your home for
+              <Typography
+                variant="h5"
+                align="left"
+                fontWeight="1000"
+                style={{
+                  display: "inline",
+                  padding: "5px",
+                  // backgroundColor: primaryColor,
+                  color: "black",
+                  backgroundImage:
+                    "linear-gradient(rgba(0, 0, 0, 0) calc(100% - 5px), #948c1e calc(100% - 5px), #948c1e 100%, rgba(0, 0, 0, 0) 100%)",
+                }}
+              >
+                Free
+              </Typography>
             </Typography>
           </Grid>
         </Box>
