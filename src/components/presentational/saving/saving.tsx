@@ -61,7 +61,6 @@ const SavingsCalculator = () => {
       <Box marginTop={2}>
         <Divider />
       </Box>
-
       <Box marginTop={2}>
         <Typography variant="h6" gutterBottom>
           Slide to set your predicted monthly rental income (Beginning at 300
@@ -84,20 +83,19 @@ const SavingsCalculator = () => {
         </Grid>
       </Box>
       <Box marginTop={2}>
-        <Grid container>
+        <Grid container alignItems="center">
           <Grid item md={9} sm={9}>
             <Typography
               variant="h3"
-              gutterBottom
-              textAlign={"center"}
-              fontWeight={"bold"}
+              textAlign="center"
+              fontWeight="bold"
               color={primaryColor}
             >
               £{calculateSavings()}
             </Typography>
           </Grid>
-          <Grid item md={3} sm={3}>
-            <ImgComponent imageUrl={Wallet} alt={"wallet img"} />
+          <Grid item md={3} sm={3} style={{ maxWidth: "100%", height: "auto" }}>
+            <ImgComponent imageUrl={Wallet} alt="wallet img" />
           </Grid>
         </Grid>
       </Box>

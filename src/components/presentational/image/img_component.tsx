@@ -2,9 +2,10 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 
 const Image = styled("img")({
-  height: "100%",
-  objectFit: "cover",
-  alignItems: "stretch"
+  maxHeight: "100%",
+  maxWidth: "100%",
+  height: "65px",
+  objectFit: "contain",
 });
 
 interface ImgComponentProps {
