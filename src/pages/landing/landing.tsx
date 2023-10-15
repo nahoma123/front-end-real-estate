@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, Typography, Box, Grid } from "@mui/material";
 import AdvCarousel from "../../components/presentational/carousel/carousel";
 import SavingsCalculator from "../../components/presentational/saving/saving";
 import ImgFixedHeight from "../../components/presentational/image/fixed_height_img";
 import { OnboardingModalWrapper } from "../../components/presentational/model/onboarding_call";
-import { primaryColor } from "../../styles/color";
+import BlockBar from "../../components/presentational/AdvBar/adv_bar";
+import Offers from "../../components/presentational/offers/offers";
 
 const LandingPage: React.FC = () => {
   let headerImg: string =
@@ -42,39 +43,45 @@ const LandingPage: React.FC = () => {
             </Typography>
           </Grid>
         </Box>
-      </Container>
-      <Grid container marginTop={"10px"} marginBottom={"10px"}>
-        <ImgFixedHeight imageUrl={headerImg} />
-      </Grid>
-      <Grid
-        container
-        paddingBottom={1}
-        marginTop={1}
-        marginBottom={5}
-        direction="row"
-      >
+        <Grid container marginTop={"10px"} marginBottom={"10px"}>
+          <ImgFixedHeight imageUrl={headerImg} />
+        </Grid>
         <Grid
-          item
-          md={6}
           container
-          alignItems="center"
-          direction="column"
-          justifyContent="center"
+          paddingBottom={1}
+          marginTop={1}
+          marginBottom={5}
+          direction="row"
         >
-          {/* <img
+          <Grid
+            item
+            md={6}
+            container
+            alignItems="center"
+            direction="column"
+            justifyContent="center"
+          >
+            {/* <img
             style={{ height: "25%", margin: "10px" }}
             alt="testing1"
             src="https://strike.co.uk/static/ebb219314ad10098c1b9ade11391feb1/5d2f5/selling.webp"
           /> */}
 
-          <Typography variant="h4" align="center">
-            Check how much you could save when you sell your home for free
-          </Typography>
+            <Typography variant="h4" align="center" textAlign={"left"}>
+              See how much you could save per year when you let your home for
+              free
+            </Typography>
+          </Grid>
+          <Grid item container md={6} paddingLeft={4}>
+            <SavingsCalculator />
+          </Grid>
         </Grid>
-        <Grid item container md={6}>
-          <SavingsCalculator />
-        </Grid>
-      </Grid>
+      </Container>
+      <BlockBar />
+
+      {/* offers */}
+
+      <Offers />
       <Grid container paddingBottom={10}>
         <AdvCarousel />
       </Grid>

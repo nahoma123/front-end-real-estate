@@ -38,9 +38,9 @@ const SavingsCalculator = () => {
 
   return (
     <Paper elevation={3} sx={{ padding: 3, marginTop: 5 }}>
-      <Typography variant="h5" gutterBottom>
+      {/* <Typography variant="h5" gutterBottom>
         See how much you could save per year when you let your home for free
-      </Typography>
+      </Typography> */}
       <Box marginTop={5}>
         <Typography variant="h6" display={"inline"}>
           Savings based on a high street commission of

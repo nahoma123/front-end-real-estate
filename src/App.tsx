@@ -1,4 +1,4 @@
-import { createTheme, ThemeProvider } from "@mui/material";
+import { Box, Container, createTheme, ThemeProvider } from "@mui/material";
 import LandingPage from "./pages/landing/landing";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -35,6 +35,13 @@ const theme = createTheme({
   // ... other theme options
 }); // Create your theme instance
 
+function Contained({ children }: { children: JSX.Element }): JSX.Element {
+  return <Container>{children}</Container>;
+}
+
+function UnContained({ children }: { children: JSX.Element }): JSX.Element {
+  return <Box>{children}</Box>;
+}
 
 function App(): JSX.Element {
   return (
@@ -42,8 +49,22 @@ function App(): JSX.Element {
       <MainLayout>
         <BrowserRouter>
           <Routes>
-            <Route path="/" Component={LandingPage} />
-            <Route path="/about" Component={About} />
+            <Route
+              path="/"
+              element={
+                <UnContained>
+                  <LandingPage />
+                </UnContained>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <Contained>
+                  <About />
+                </Contained>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </MainLayout>
