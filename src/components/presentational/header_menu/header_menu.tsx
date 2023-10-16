@@ -1,6 +1,7 @@
 import React, { useState, ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { styled, Typography } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import MenuContent from "./menu_content";
 
@@ -25,58 +26,69 @@ const StyledDropdown = styled(Button)(({ theme }) => ({
     backgroundColor: "white",
     color: "#948c1e",
   },
-  "&:onClick": {
-    backgroundColor: "white",
+  "&:hover $dropdownText": {
+    color: "#948c1e",
   },
 }));
 
+const DropdownText = styled(StyledDropdownText)({
+  color: "black",
+});
+
 interface HeaderMenuProps {
   label: string;
-  menuItems: ReactNode;
+  redirectTo?: string;
 }
 
-const HeaderMenu: React.FC<HeaderMenuProps> = ({ label, menuItems }) => {
+const HeaderMenu: React.FC<HeaderMenuProps> = ({ label, redirectTo }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-    setIsOpen(!isOpen);
+    setIsOpen(true);
   };
 
-  const handleClose = () => {
+  const handleMouseLeave = () => {
     setAnchorEl(null);
     setIsOpen(false);
   };
 
+  const handleMenuItemClick = () => {
+    console.log("looog");
+    if (redirectTo) {
+      navigate(redirectTo);
+    }
+  };
+
+  const handleDropdownClick = () => {
+    console.log("testing"); // Additional test log
+    handleMenuItemClick(); // Call the handleMenuItemClick function on dropdown click
+  };
+
   return (
-    <div>
+    <Box onClick={handleDropdownClick}>
       <StyledDropdown
         id="fade-button"
         aria-controls={isOpen ? "fade-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={isOpen ? "true" : undefined}
-        onClick={handleClick}
+        // Call handleDropdownClick instead of console.log("testing")
+        onMouseOver={handleMouseEnter}
         sx={{ color: "white" }}
-        endIcon={
-          <ArrowDropDownIcon sx={{ color: isOpen ? "#948c1e" : "black" }} />
-        }
       >
-        <StyledDropdownText
-          variant="button"
-          display="block"
-          sx={{ color: isOpen ? "#948c1e" : "black" }}
-        >
+        <DropdownText variant="button" display="block">
           {label}
-        </StyledDropdownText>
+        </DropdownText>
+        <ArrowDropDownIcon sx={{ color: isOpen ? "#948c1e" : "black" }} />
       </StyledDropdown>
       <MenuContent
         anchorEl={anchorEl}
         open={isOpen}
-        onClose={handleClose}
-        menuItems={menuItems}
+        onClose={handleMouseLeave}
       />
-    </div>
+    </Box>
   );
 };
 

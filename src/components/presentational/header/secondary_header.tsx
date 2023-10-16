@@ -30,7 +30,7 @@ const StyledButton2 = styled(Button)({
 
 const StyledGrid = styled(Grid)({});
 
-const Header: React.FC = () => {
+const SecondaryHeader: React.FC = () => {
   return (
     <StyledAppBar position="fixed">
       <Toolbar>
@@ -39,40 +39,6 @@ const Header: React.FC = () => {
             <LogoImg />
           </Grid>
           <StyledGrid container item direction="row" md={8} sm={8}>
-            <Grid item container>
-              <Grid
-                item
-                md={4}
-                justifyContent="center"
-                alignItems="center"
-                container
-              >
-                <HeaderMenu label="Landlords" redirectTo="/" />
-              </Grid>
-              <Grid
-                item
-                md={4}
-                justifyContent="center"
-                alignItems="center"
-                container
-              >
-                <StyledDropdown>
-                  <StyledDropdownText>Why Us</StyledDropdownText>
-                </StyledDropdown>
-              </Grid>
-
-              <Grid
-                item
-                md={4}
-                justifyContent="center"
-                alignItems="center"
-                container
-              >
-                <StyledDropdown>
-                  <StyledDropdownText>Find a property</StyledDropdownText>
-                </StyledDropdown>
-              </Grid>
-            </Grid>
             {/* docs */}
           </StyledGrid>
           <Grid
@@ -82,15 +48,11 @@ const Header: React.FC = () => {
             sm={0}
             justifyContent="center"
             alignContent={"center"}
-          >
-            <StyledButton2 endIcon={<LoginIcon fontSize="small" />}>
-              Sign In/ Register
-            </StyledButton2>
-          </Grid>
+          ></Grid>
         </Grid>
       </Toolbar>
     </StyledAppBar>
   );
 };
 
-export { Header };
+export { SecondaryHeader };

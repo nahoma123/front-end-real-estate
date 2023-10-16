@@ -6,6 +6,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { MainLayout } from "./layouts/MainLayout";
 import { ModalProvider } from "context/modal_container";
 import { OnboardingModalWrapper } from "./components/presentational/model/onboarding_call";
+import { SecondaryLayout } from "./layouts/SecondaryLayout";
+import { BookValuation } from "./pages/book_valuation/book_valuation";
+import { BookValuationRegistration } from "./pages/book_valuation/book_valuation_register";
 
 function About() {
   return (
@@ -46,28 +49,44 @@ function UnContained({ children }: { children: JSX.Element }): JSX.Element {
 function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
-      <MainLayout>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <MainLayout>
                 <UnContained>
                   <LandingPage />
                 </UnContained>
-              }
-            />
-            <Route
-              path="/about"
-              element={
-                <Contained>
-                  <About />
-                </Contained>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-      </MainLayout>
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <Contained>
+                <About />
+              </Contained>
+            }
+          />
+          <Route
+            path="/book_valuation"
+            element={
+              <SecondaryLayout>
+                <BookValuation />
+              </SecondaryLayout>
+            }
+          />
+          <Route
+            path="/book_valuation_registration"
+            element={
+              <SecondaryLayout>
+                <BookValuationRegistration />
+              </SecondaryLayout>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
