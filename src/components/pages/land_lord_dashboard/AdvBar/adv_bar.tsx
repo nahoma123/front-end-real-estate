@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box, Link, Typography, styled, Grid, Rating } from "@mui/material";
-import Zoopla from "../../../assets/images/zoopla_logo.webp";
-import OpenRent from "../../../assets/images/openrent-logo-blue.png";
-import RightMove from "../../../assets/images/right_move.svg";
-import SpareRoom from "../../../assets/images/spareRoom_header_logo.svg";
-import TrustPilot from "../../../assets/images/trust_pilot.svg";
+import Zoopla from "../../../../assets/images/zoopla_logo.webp";
+import OpenRent from "../../../../assets/images/openrent-logo-blue.png";
+import RightMove from "../../../../assets/images/right_move.svg";
+import SpareRoom from "../../../../assets/images/spareRoom_header_logo.svg";
+import TrustPilot from "../../../../assets/images/trust_pilot.svg";
 import StarIcon from "@mui/icons-material/Star";
 
 const Bar = styled(Box)(({ theme }) => ({

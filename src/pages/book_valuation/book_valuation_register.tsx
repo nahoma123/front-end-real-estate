@@ -14,7 +14,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { DateTimePicker } from "@mui/x-date-pickers";
-import { SelectChangeEvent } from "@mui/material/Select";
 import { useLocation } from "react-router-dom";
 
 type BookValuationRegistrationProps = {};

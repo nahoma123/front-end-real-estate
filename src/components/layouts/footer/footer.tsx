@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Typography, Link, Grid } from "@mui/material";
 import { styled } from "@mui/system";
-import LogoImg from "../logo/image";
+import LogoImg from '../../presentational/logo/image';
 
 const FooterContainer = styled("footer")({
   backgroundColor: "#333",

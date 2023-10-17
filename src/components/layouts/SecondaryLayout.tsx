@@ -1,9 +1,7 @@
 import { ReactNode } from "react";
-import { Header } from "../components/presentational/header/Header";
-import Footer from "../components/presentational/footer/footer";
 import { ModalProvider } from "context/modal_container";
 import { Box, Container, Grid } from "@mui/material";
-import { SecondaryHeader } from "../components/presentational/header/secondary_header";
+import { SecondaryHeader } from "../presentational/header/secondary_header";
 
 type SecondLayoutProps = {
   children: ReactNode;

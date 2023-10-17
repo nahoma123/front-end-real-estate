@@ -3,10 +3,8 @@ import LandingPage from "./pages/landing/landing";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import { HomePage } from './pages/HomePage/HomePage';
-import { MainLayout } from "./layouts/MainLayout";
-import { ModalProvider } from "context/modal_container";
-import { OnboardingModalWrapper } from "./components/presentational/model/onboarding_call";
-import { SecondaryLayout } from "./layouts/SecondaryLayout";
+import { MainLayout } from "./components/layouts/MainLayout";
+import { SecondaryLayout } from "./components/layouts/SecondaryLayout";
 import { BookValuation } from "./pages/book_valuation/book_valuation";
 import { BookValuationRegistration } from "./pages/book_valuation/book_valuation_register";
 

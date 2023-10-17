@@ -7,11 +7,11 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import AdvCarousel from "../../components/presentational/carousel/carousel";
+import AdvCarousel from "../../components/pages/land_lord_dashboard/carousel/carousel";
 import SavingsCalculator from "../../components/presentational/saving/saving";
 import ImgFixedHeight from "../../components/presentational/image/fixed_height_img";
 import { OnboardingModalWrapper } from "../../components/presentational/model/onboarding_call";
-import BlockBar from "../../components/presentational/AdvBar/adv_bar";
+import BlockBar from "../../components/pages/land_lord_dashboard/AdvBar/adv_bar";
 import Offers from "../../components/presentational/offers/offers";
 import { useNavigate } from "react-router-dom";
 import HeroImg from "../../assets/images/hero.jpg";
