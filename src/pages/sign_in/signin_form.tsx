@@ -1,41 +1,55 @@
-import React from "react";
-import { TextField, Box, Button, Typography } from "@mui/material";
-import { Login } from "@mui/icons-material";
-import { useForm, Controller } from "react-hook-form";
-import { loginUser } from "../../services/api";
-
-type LoginFormProps = {
-  // handleFormChange: () => void;
-};
+import { LockOpen } from "@mui/icons-material";
+import {
+  Alert,
+  Box,
+  Button,
+  Grid,
+  LinearProgress,
+  Snackbar,
+  TextField,
+} from "@mui/material";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { loginUser } from "../../services/apiService";
 
 type LoginFormInputs = {
   email: string;
   password: string;
 };
 
-const LoginForm: React.FC<LoginFormProps> = ({}) => {
+export function LoginForm() {
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<LoginFormInputs>();
+  const [error, setError] = useState<string | null>(null); // State variable for error message
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false); // State variable for snackbar visibility
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      // Call the API service to submit the form data
-      await loginUser(data.email, data.password);
+      setIsSubmitting(true);
 
-      // Handle successful login (e.g., redirect, update user state)
+      // Call the API service to log in the user
+      await loginUser(data.email,data.password);
+
+      // Handle successful login (e.g., show success message, redirect)
       console.log("Login successful!");
-    } catch (error) {
+    } catch (error: any) {
       // Handle login error (e.g., display error message)
-      console.error("Login failed:", error);
+      console.log("-Error-");
+      // console.log(error.response?.data); // Log the response data
+      setError(error?.error?.message); // Set the error message
+      setSnackbarOpen(true); // Open the snackbar
+    } finally {
+      setIsSubmitting(false);
     }
   });
 
   return (
-    <form onSubmit={onSubmit}>
-      <Box display="flex" flexDirection="column" alignItems="center">
+    <Box>
+      <form onSubmit={onSubmit}>
         <Controller
           name="email"
           control={control}
@@ -51,16 +65,14 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
             <TextField
               {...field}
               label="Email"
-              type="email"
-              fullWidth
               variant="outlined"
-              margin="normal"
+              fullWidth
+              margin="dense"
               error={!!errors.email}
               helperText={errors.email?.message}
             />
           )}
         />
-
         <Controller
           name="password"
           control={control}
@@ -75,29 +87,42 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
           render={({ field }) => (
             <TextField
               {...field}
-              fullWidth
               label="Password"
               type="password"
               variant="outlined"
-              margin="normal"
+              fullWidth
+              margin="dense"
               error={!!errors.password}
               helperText={errors.password?.message}
             />
           )}
         />
-
         <Button
-          style={{ borderRadius: "0px", marginTop: "20px" }}
-          fullWidth
           type="submit"
           variant="contained"
-          startIcon={<Login />}
+          style={{ borderRadius: "0px", marginTop: "20px" }}
+          fullWidth
+          startIcon={<LockOpen />}
+          disabled={isSubmitting}
         >
-          Login
+          {isSubmitting ? (
+            <Box width="100%">
+              <LinearProgress color="primary" />
+            </Box>
+          ) : (
+            "Login"
+          )}
         </Button>
-      </Box>
-    </form>
-  );
-};
+      </form>
 
-export { LoginForm };
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+        message={error}
+      >
+        <Alert severity="error">{`${error}`}</Alert>
+      </Snackbar>
+    </Box>
+  );
+}

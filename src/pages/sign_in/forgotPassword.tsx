@@ -1,41 +1,63 @@
-import React from "react";
-import { TextField, Box, Button, Typography } from "@mui/material";
-import { Login } from "@mui/icons-material";
-import { useForm, Controller } from "react-hook-form";
-import { loginUser } from "../../services/api";
-
-type ForgotPasswordFormProps = {
-  // handleFormChange: () => void;
-};
+import { LockOpen, Mail } from "@mui/icons-material";
+import {
+  Alert,
+  Box,
+  Button,
+  Grid,
+  LinearProgress,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { forgotPassword, resetPassword } from "../../services/apiService";
 
 type ForgotPasswordFormInputs = {
   email: string;
-  password: string;
+  pin: number; // Change the type to number
+  newPassword: string;
 };
 
-const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({}) => {
+export function ForgotPasswordForm() {
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<ForgotPasswordFormInputs>();
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [showPinForm, setShowPinForm] = useState(false);
+  const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      // Call the API service to submit the form data
-      await loginUser(data.email, data.password);
+      setIsSubmitting(true);
 
-      // Handle successful login (e.g., redirect, update user state)
-      console.log("Login successful!");
-    } catch (error) {
-      // Handle login error (e.g., display error message)
-      console.error("Login failed:", error);
+      if (!showPinForm) {
+        // Step 1: Request PIN
+        await forgotPassword(data.email);
+        setShowPinForm(true);
+        setError(null);
+      } else {
+        // Step 3: Reset Password
+        await resetPassword(data.email, data.pin, data.newPassword);
+        setError(null);
+        setPasswordResetSuccess(true);
+        setShowPinForm(false);
+      }
+    } catch (error: any) {
+      setError(error?.error?.message);
+      setSnackbarOpen(true);
+    } finally {
+      setIsSubmitting(false);
     }
   });
 
   return (
-    <form onSubmit={onSubmit}>
-      <Box display="flex" flexDirection="column" alignItems="center">
+    <Box>
+      <form onSubmit={onSubmit}>
         <Controller
           name="email"
           control={control}
@@ -51,53 +73,100 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({}) => {
             <TextField
               {...field}
               label="Email"
-              type="email"
-              fullWidth
               variant="outlined"
-              margin="normal"
+              fullWidth
+              margin="dense"
               error={!!errors.email}
               helperText={errors.email?.message}
+              disabled={showPinForm}
             />
           )}
         />
 
-        <Controller
-          name="password"
-          control={control}
-          defaultValue=""
-          rules={{
-            required: "Password is required",
-            minLength: {
-              value: 8,
-              message: "Password must be at least 8 characters long",
-            },
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              fullWidth
-              label="Password"
-              type="password"
-              variant="outlined"
-              margin="normal"
-              error={!!errors.password}
-              helperText={errors.password?.message}
+        {showPinForm ? (
+          <>
+            <Controller
+              name="pin"
+              control={control}
+              defaultValue={0} // Change the default value to 0 or another number
+              rules={{
+                required: "PIN is required",
+                validate: {
+                  validPin: (value) => !isNaN(value) || "Invalid PIN", // Validate that it's a number
+                },
+              }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="PIN"
+                  variant="outlined"
+                  fullWidth
+                  margin="dense"
+                  error={!!errors.pin}
+                  helperText={errors.pin?.message}
+                />
+              )}
             />
-          )}
-        />
+
+            <Controller
+              name="newPassword"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "New password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters long",
+                },
+              }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="New Password"
+                  type="password"
+                  variant="outlined"
+                  fullWidth
+                  margin="dense"
+                  error={!!errors.newPassword}
+                  helperText={errors.newPassword?.message}
+                />
+              )}
+            />
+          </>
+        ) : null}
 
         <Button
-          style={{ borderRadius: "0px", marginTop: "20px" }}
-          fullWidth
           type="submit"
           variant="contained"
-          startIcon={<Login />}
+          style={{ borderRadius: "0px", marginTop: "20px" }}
+          fullWidth
+          startIcon={showPinForm ? <LockOpen /> : <Mail />}
+          disabled={isSubmitting}
         >
-          Login
+          {isSubmitting ? (
+            <Box width="100%">
+              <LinearProgress color="primary" />
+            </Box>
+          ) : showPinForm ? (
+            "Reset Password"
+          ) : (
+            "Forgot Password"
+          )}
         </Button>
-      </Box>
-    </form>
-  );
-};
+      </form>
 
-export { ForgotPasswordForm };
+      <Snackbar
+        open={snackbarOpen || passwordResetSuccess}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+        message={error}
+      >
+        {passwordResetSuccess ? (
+          <Alert severity="success">Password reset successful!</Alert>
+        ) : (
+          <Alert severity="error">{`${error}`}</Alert>
+        )}
+      </Snackbar>
+    </Box>
+  );
+}

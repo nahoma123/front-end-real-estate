@@ -1,5 +1,6 @@
 import { Login } from "@mui/icons-material";
 import {
+  Alert,
   Box,
   Button,
   Grid,
@@ -9,7 +10,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { registerUser } from "../../services/api";
+import { registerUser } from "../../services/apiService";
 
 type RegisterFormInputs = {
   email: string;
@@ -31,7 +32,10 @@ export function RegisterForm() {
   const [error, setError] = useState<string | null>(null); // State variable for error message
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false); // State variable for snackbar visibility
+  const [fieldError, setFieldError] = useState<string | null>(null); // State variable for field error message
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsSubmitting(true);
@@ -48,11 +52,23 @@ export function RegisterForm() {
 
       // Handle successful registration (e.g., show success message, redirect)
       console.log("Registration successful!");
-      // setRegistrationSuccess(true);
-    } catch (error:any) {
+      setIsSuccess(true);
+    } catch (error: any) {
       // Handle registration error (e.g., display error message)
-      setError(error?.message); // Set the error message
-      setSnackbarOpen(true); // Open the snackbar
+      console.log("-Error-");
+      // console.log(error.response?.data); // Log the response data
+      if (error?.error?.field_error) {
+        // If field errors are present
+        const fieldErrors = error.error.field_error;
+        const firstFieldError = fieldErrors[0]; // Get the first field error
+        setFieldError(
+          `${firstFieldError.name}: ${firstFieldError.description}`
+        ); // Set the field error message
+        setSnackbarOpen(true); // Open the snackbar
+      } else {
+        setError(error?.error?.message); // Set the general error message
+        setSnackbarOpen(true); // Open the snackbar
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -227,12 +243,33 @@ export function RegisterForm() {
           )}
         </Button>
       </form>
+
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}
         onClose={() => setSnackbarOpen(false)}
         message={error}
-      />
+      >
+        <Alert severity="error">{`${error}`}</Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={isSuccess}
+        autoHideDuration={6000}
+        onClose={() => setIsSuccess(false)}
+        message="Registered successfully"
+      >
+        <Alert severity="success">Registered successfully!</Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+        message={error || fieldError}
+      >
+        <Alert severity="error">{error || fieldError}</Alert>
+      </Snackbar>
     </Box>
   );
 }
