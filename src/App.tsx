@@ -7,6 +7,9 @@ import { MainLayout } from "./components/layouts/MainLayout";
 import { SecondaryLayout } from "./components/layouts/SecondaryLayout";
 import { BookValuation } from "./pages/book_valuation/book_valuation";
 import { BookValuationRegistration } from "./pages/book_valuation/book_valuation_register";
+import { AuthContainer } from "./pages/sign_in/signin_page";
+import FlexibleImgComponent from "./components/presentational/image/flexible_img";
+import LoginMemberShip from "./assets/images/login_membership.jpg";
 
 function About() {
   return (
@@ -75,6 +78,23 @@ function App(): JSX.Element {
               </SecondaryLayout>
             }
           />
+          <Route
+            path="/sign_in"
+            element={
+              <SecondaryLayout
+                dynamicComponent={
+                  <FlexibleImgComponent
+                    alt="login"
+                    style={{ height: "300px" }}
+                    imageUrl={LoginMemberShip}
+                  />
+                }
+              >
+                <AuthContainer />
+              </SecondaryLayout>
+            }
+          />
+
           <Route
             path="/book_valuation_registration"
             element={

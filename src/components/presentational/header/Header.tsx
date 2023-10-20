@@ -8,6 +8,7 @@ import {
   HeaderMenu,
   StyledDropdown,
 } from "../header_menu/header_menu";
+import { useNavigate } from "react-router-dom";
 const StyledAppBar = styled(AppBar)({
   backgroundColor: "#fff",
   color: "#fff",
@@ -31,6 +32,8 @@ const StyledButton2 = styled(Button)({
 const StyledGrid = styled(Grid)({});
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <StyledAppBar position="fixed">
       <Toolbar>
@@ -83,7 +86,7 @@ const Header: React.FC = () => {
             justifyContent="center"
             alignContent={"center"}
           >
-            <StyledButton2 endIcon={<LoginIcon fontSize="small" />}>
+            <StyledButton2 endIcon={<LoginIcon fontSize="small" />} onClick={()=> navigate("/sign_in")}>
               Sign In/ Register
             </StyledButton2>
           </Grid>

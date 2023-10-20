@@ -5,24 +5,28 @@ import { SecondaryHeader } from "../presentational/header/secondary_header";
 
 type SecondLayoutProps = {
   children: ReactNode;
+  dynamicComponent?: ReactNode; // Make the dynamic component optional
 };
-// const StyledBox = styled(Container)({
-//   marginTop: "64px", // Adjust this value to match the height of your AppBar
-// });
 
-function SecondaryLayout({ children }: SecondLayoutProps) {
+function SecondaryLayout({ children, dynamicComponent }: SecondLayoutProps) {
   return (
-      <ModalProvider>
-        <Grid container height={"100%"}>
-          <Grid md={8}>
-            <SecondaryHeader />
-            <Container>
-              <Box marginTop={15} marginBottom={15} height="100%">{children}</Box>
-            </Container>
-          </Grid>
-          <Grid md={4}></Grid>
+    <ModalProvider>
+      <Grid container height="100%">
+        <Grid item md={8}>
+          <SecondaryHeader />
+          <Container>
+            <Box marginTop={15} height="100%">
+              {children}
+            </Box>
+          </Container>
         </Grid>
-      </ModalProvider>
+        {dynamicComponent && (
+          <Grid item md={4} display="center" container justifyContent="center" alignItems="center">
+            {dynamicComponent}
+          </Grid>
+        )}
+      </Grid>
+    </ModalProvider>
   );
 }
 
