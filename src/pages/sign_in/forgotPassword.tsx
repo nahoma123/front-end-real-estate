@@ -1,35 +1,33 @@
-import { LockOpen, Mail } from "@mui/icons-material";
-import {
-  Alert,
-  Box,
-  Button,
-  Grid,
-  LinearProgress,
-  Snackbar,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Alert, Box, Button, LinearProgress, Snackbar, TextField, Typography } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { forgotPassword, resetPassword } from "../../services/apiService";
+import { LockOpen, Mail } from "@mui/icons-material";
 
 type ForgotPasswordFormInputs = {
   email: string;
-  pin: number; // Change the type to number
+  pin: number;
   newPassword: string;
+  verifyPassword: string; // Add a field for verifying the new password
 };
 
 export function ForgotPasswordForm() {
   const {
     handleSubmit,
     control,
+    formState,
     formState: { errors },
+    getValues,
   } = useForm<ForgotPasswordFormInputs>();
+   
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [showPinForm, setShowPinForm] = useState(false);
+  const [emailForMessage, setEmailForMessage] = useState(""); // Initialize to an empty string
   const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
+  const [resetCodeSent, setResetCodeSent] = useState(false); // State to track if reset code is sent
+  const [newPassword, setNewPassword] = useState(""); // State to hold new password
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -40,6 +38,9 @@ export function ForgotPasswordForm() {
         await forgotPassword(data.email);
         setShowPinForm(true);
         setError(null);
+        setEmailForMessage(data.email); // Set the email for the message
+        setResetCodeSent(true);
+        setNewPassword(data.newPassword); // Set the new password for validation
       } else {
         // Step 3: Reset Password
         await resetPassword(data.email, data.pin, data.newPassword);
@@ -88,11 +89,11 @@ export function ForgotPasswordForm() {
             <Controller
               name="pin"
               control={control}
-              defaultValue={0} // Change the default value to 0 or another number
+              // defaultValue={0}
               rules={{
                 required: "PIN is required",
                 validate: {
-                  validPin: (value) => !isNaN(value) || "Invalid PIN", // Validate that it's a number
+                  validPin: (value) => !isNaN(value) || "Invalid PIN",
                 },
               }}
               render={({ field }) => (
@@ -132,6 +133,32 @@ export function ForgotPasswordForm() {
                 />
               )}
             />
+
+            {/* Verify Password Field */}
+            <Controller
+              name="verifyPassword"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "Please verify your new password",
+                validate: {
+                  passwordMatch: (value) =>
+                    value === getValues("newPassword") || "Passwords do not match",
+                },
+              }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Verify Password"
+                  type="password"
+                  variant="outlined"
+                  fullWidth
+                  margin="dense"
+                  error={!!errors.verifyPassword}
+                  helperText={errors.verifyPassword?.message}
+                />
+              )}
+            />
           </>
         ) : null}
 
@@ -167,6 +194,13 @@ export function ForgotPasswordForm() {
           <Alert severity="error">{`${error}`}</Alert>
         )}
       </Snackbar>
+
+      {/* Reset code sent message */}
+      {resetCodeSent && (
+        <Typography variant="body2" color="textSecondary" padding={1} fontWeight={"bolder"}>
+          Reset code has been sent to your email: {emailForMessage}
+        </Typography>
+      )}
     </Box>
   );
 }
