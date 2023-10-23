@@ -10,6 +10,13 @@ import { BookValuationRegistration } from "./pages/book_valuation/book_valuation
 import { AuthContainer } from "./pages/sign_in/signin_page";
 import FlexibleImgComponent from "./components/presentational/image/flexible_img";
 import LoginMemberShip from "./assets/images/login_membership.jpg";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
 function About() {
   return (
@@ -47,64 +54,68 @@ function UnContained({ children }: { children: JSX.Element }): JSX.Element {
   return <Box>{children}</Box>;
 }
 
+const queryClient = new QueryClient();
+
 function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <MainLayout>
-                <UnContained>
-                  <LandingPage />
-                </UnContained>
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <Contained>
-                <About />
-              </Contained>
-            }
-          />
-          <Route
-            path="/book_valuation"
-            element={
-              <SecondaryLayout>
-                <BookValuation />
-              </SecondaryLayout>
-            }
-          />
-          <Route
-            path="/sign_in"
-            element={
-              <SecondaryLayout
-                dynamicComponent={
-                  <FlexibleImgComponent
-                    alt="login"
-                    style={{ height: "300px" }}
-                    imageUrl={LoginMemberShip}
-                  />
-                }
-              >
-                <AuthContainer />
-              </SecondaryLayout>
-            }
-          />
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <MainLayout>
+                  <UnContained>
+                    <LandingPage />
+                  </UnContained>
+                </MainLayout>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <Contained>
+                  <About />
+                </Contained>
+              }
+            />
+            <Route
+              path="/book_valuation"
+              element={
+                <SecondaryLayout>
+                  <BookValuation />
+                </SecondaryLayout>
+              }
+            />
+            <Route
+              path="/sign_in"
+              element={
+                <SecondaryLayout
+                  dynamicComponent={
+                    <FlexibleImgComponent
+                      alt="login"
+                      style={{ height: "300px" }}
+                      imageUrl={LoginMemberShip}
+                    />
+                  }
+                >
+                  <AuthContainer />
+                </SecondaryLayout>
+              }
+            />
 
-          <Route
-            path="/book_valuation_registration"
-            element={
-              <SecondaryLayout>
-                <BookValuationRegistration />
-              </SecondaryLayout>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+            <Route
+              path="/book_valuation_registration"
+              element={
+                <SecondaryLayout>
+                  <BookValuationRegistration />
+                </SecondaryLayout>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

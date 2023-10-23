@@ -1,12 +1,17 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { REGISTER_URL, LOGIN_URL, FORGOT_REQUEST_URL, VERIFY_FORGOT_REQUEST_URL } from "constants/api";
+import {
+  REGISTER_URL,
+  LOGIN_URL,
+  FORGOT_REQUEST_URL,
+  VERIFY_FORGOT_REQUEST_URL,
+} from "constants/api";
 import {
   ApiOptions,
   ErrorResponse,
   RegisterUserData,
   RegisterUserResponse,
+  BookingValuationData,
 } from "./datamodels";
-
 
 async function callApi<T>(
   url: string,
@@ -89,3 +94,9 @@ export async function resetPassword(
   });
 }
 
+export async function submitBookingRequest(
+  valuation: BookingValuationData
+): Promise<void> {
+  const RESET_PASSWORD_URL = VERIFY_FORGOT_REQUEST_URL;
+  await callApi<void>(RESET_PASSWORD_URL, "POST", valuation);
+}

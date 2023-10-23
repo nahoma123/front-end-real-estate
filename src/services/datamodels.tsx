@@ -41,4 +41,20 @@ interface RegisterUserResponse {
     }>;
   };
 }
-export type { ErrorResponse, ApiOptions, RegisterUserData, RegisterUserResponse };
+
+interface BookingValuationData {
+  email: string;
+  password: string;
+  phone: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+}
+
+export type {
+  ErrorResponse,
+  ApiOptions,
+  RegisterUserData,
+  RegisterUserResponse,
+  BookingValuationData,
+};
