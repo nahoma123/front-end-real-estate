@@ -39,7 +39,6 @@ export function RegisterForm() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsSubmitting(true);
-
       // Call the API service to register the user
       await registerUser({
         email: data.email,

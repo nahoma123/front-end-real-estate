@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Logo from '../../../assets/images/thumb_freelets.png'; // Import the image file
+import { useNavigate } from "react-router-dom";
+
 
 const PictureContainer = styled.div`
   height: 100%;
@@ -17,9 +19,10 @@ const Picture = styled.img`
 `;
 
 const LogoImg = () => {
+  const navigate = useNavigate();
   return (
     <PictureContainer>
-      <Picture src={Logo} alt="logo Image" />
+      <Picture src={Logo} alt="logo Image" onClick={() => navigate("/")} />
     </PictureContainer>
   );
 };

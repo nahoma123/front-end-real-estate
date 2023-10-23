@@ -12,14 +12,20 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { Search } from "@mui/icons-material";
+import { GetAddressUrl } from "constants/api";
+import { ObjectType } from "typescript";
 
 type BookValuationProps = {};
+
+type Address = {
+  address: string;
+};
 
 function BookValuation({}: BookValuationProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [postcode, setPostcode] = useState("");
-  const [addresses, setAddresses] = useState<string[]>([]);
+  const [addresses, setAddresses] = useState<Address[]>([]);
   const [selectedAddress, setSelectedAddress] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -29,31 +35,26 @@ function BookValuation({}: BookValuationProps) {
     setPostcode(postcodeValue);
   }, [location.search]);
 
-  const handlePostcodeChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handlePostcodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPostcode(event.target.value);
   };
 
   const handleFindAddress = async () => {
     try {
-      const response = await axios.get(
-        `https://api.postcodes.io/postcodes/${postcode}/addresses`
-      );
-      const { result } = response.data;
+      const response = await axios.get(GetAddressUrl(postcode));
+      const result = response?.data?.suggestions;
+      console.log("Result-", result);
       if (result && result.length > 0) {
-        setAddresses(result);
+        setAddresses(result); // Update addresses with the list of address objects
         setIsModalOpen(true);
       } else {
         setIsModalOpen(false);
-        setAddresses([]);
+        setAddresses([]); // Clear the addresses if there are no results
       }
     } catch (error) {
       console.error("Error fetching addresses:", error);
       setIsModalOpen(false);
-      setAddresses(["Address 1", "Address 2", "Address 3"]);
     }
-    setIsModalOpen(true);
   };
 
   const handleAddressClick = (address: string) => {
@@ -150,15 +151,18 @@ function BookValuation({}: BookValuationProps) {
             value={selectedAddress}
             onChange={(event) => setSelectedAddress(event.target.value)}
           >
-            {addresses.map((address, index) => (
-              <MenuItem
-                key={index}
-                value={address}
-                onClick={() => handleAddressClick(address)}
-              >
-                {address}
-              </MenuItem>
-            ))}
+            {addresses.map((address, index) => {
+              console.log("Address", address);
+              return (
+                <MenuItem
+                  key={index}
+                  value={address?.address}
+                  onClick={() => handleAddressClick(address?.address)}
+                >
+                  {address?.address}
+                </MenuItem>
+              );
+            })}
           </TextField>
         </Box>
       </Modal>
