@@ -1,13 +1,15 @@
 import { Controller } from "react-hook-form";
-import { TextField } from "@mui/material";
+import { TextField, TextFieldProps } from "@mui/material";
 
 type TextFieldWithValidationProps = {
   name: string;
   control: any;
   defaultValue: string;
-  rules: any;
+  rules?: any;
+  type?: string;
   label: string;
-};
+  children?: any;
+} & TextFieldProps & { [key: string]: any };
 
 const TextFieldWithValidation: React.FC<TextFieldWithValidationProps> = ({
   name,
@@ -15,6 +17,8 @@ const TextFieldWithValidation: React.FC<TextFieldWithValidationProps> = ({
   defaultValue,
   rules,
   label,
+  children,
+  ...props
 }) => {
   return (
     <Controller
@@ -27,10 +31,11 @@ const TextFieldWithValidation: React.FC<TextFieldWithValidationProps> = ({
           {...field}
           label={label}
           variant="outlined"
-          fullWidth
           margin="dense"
+          {...props}
           error={!!error}
           helperText={error?.message}
+          children={children}
         />
       )}
     />

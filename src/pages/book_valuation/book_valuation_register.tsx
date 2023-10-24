@@ -1,76 +1,51 @@
 import React, { useState } from "react";
 import {
-  Grid,
-  TextField,
-  MenuItem,
   Box,
-  Typography,
   Button,
   Checkbox,
-  styled,
   CircularProgress,
+  Grid,
+  MenuItem,
+  Typography,
 } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-
-import { DateTimePicker } from "@mui/x-date-pickers";
-import { useLocation } from "react-router-dom";
+import TextFieldWithValidation from "../../components/common/TextFieldWithValidation";
+import DateTimePickerWithValidation from "../../components/common/DateTimePicker";
+import { validationRules } from "utils/validationRules";
 
 type BookValuationRegistrationProps = {};
 
-const StyledTextField = styled(TextField)({
-  marginTop: 8,
-});
+type FormInputs = {
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  status: string;
+  termsAccepted: boolean;
+  selectedDateTime: Date | null;
+};
 
-function BookValuationRegistration({}: BookValuationRegistrationProps) {
+const BookValuationRegistration: React.FC<
+  BookValuationRegistrationProps
+> = () => {
+  const { handleSubmit, control } = useForm<FormInputs>();
+
   const location = useLocation();
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [status, setStatus] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false);
-  const [selectedDateTime, setSelectedDateTime] = useState<Date | null>(null);
-  const [loading, setLoading] = useState(false); // New loading state
+  const [loading, setLoading] = useState(false);
 
-  const handleFullNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFullName(event.target.value);
-  };
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePhoneNumberChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPhoneNumber(event.target.value);
-  };
-
-  const handleStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStatus(event.target.value);
-  };
-
-  const handleTermsAcceptedChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setTermsAccepted(event.target.checked);
-  };
-
-  const handleDateTimeChange = (date: Date | null) => {
-    setSelectedDateTime(date);
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    setLoading(true); // Show loading state
+  const onSubmit = handleSubmit((data) => {
+    setLoading(true);
+    console.log(data);
 
     // Perform form submission logic here
     // Simulating an asynchronous operation with setTimeout
     setTimeout(() => {
-      setLoading(false); // Hide loading state
+      setLoading(false);
       // Additional logic after form submission
     }, 2000);
-  };
+  });
 
   // Get the value from the route query
   const searchParams = new URLSearchParams(location.search);
@@ -101,94 +76,102 @@ function BookValuationRegistration({}: BookValuationRegistrationProps) {
           </Box>
 
           <Box margin={3}>
-            {loading ? ( // Render loading state while loading is true
-              <Box textAlign="center">
-                <CircularProgress />
+            <form onSubmit={onSubmit}>
+              <TextFieldWithValidation
+                fullWidth
+                name="fullName"
+                control={control}
+                defaultValue=""
+                label="Full Name"
+                rules={validationRules.fullName}
+              />
+
+              <TextFieldWithValidation
+                fullWidth
+                name="email"
+                control={control}
+                rules={validationRules.email}
+                defaultValue=""
+                label="Email Address"
+                type="email"
+              />
+
+              <TextFieldWithValidation
+                fullWidth
+                name="phoneNumber"
+                control={control}
+                defaultValue=""
+                label="Phone Number"
+                rules={validationRules.phoneNumber}
+                type="tel"
+              />
+
+              <TextFieldWithValidation
+                fullWidth
+                name="status"
+                control={control}
+                defaultValue=""
+                rules={validationRules.select}
+                label="Which best describes your status?"
+                select
+              >
+                <MenuItem value="1">I'm ready to list with FreeLets</MenuItem>
+                <MenuItem value="2">
+                  I want to learn more about FreeLets
+                </MenuItem>
+                <MenuItem value="3">
+                  I'm not sure if I'm ready to sell yet
+                </MenuItem>
+                <MenuItem value="4">Just curious about value</MenuItem>
+              </TextFieldWithValidation>
+
+              <Box width="100%" marginTop={2}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateTimePickerWithValidation
+                    rules={validationRules.basic}
+                    control={control}
+                    name="selectedDateTime"
+                    label="Preferred Call Date and Time"
+                  />
+                </LocalizationProvider>
               </Box>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <StyledTextField
-                  label="Full Name"
-                  value={fullName}
-                  onChange={handleFullNameChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                />
-                <StyledTextField
-                  label="Email Address"
-                  value={email}
-                  onChange={handleEmailChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                  type="email"
-                />
-                <StyledTextField
-                  label="Phone Number"
-                  value={phoneNumber}
-                  onChange={handlePhoneNumberChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                  type="tel"
-                />
-                <StyledTextField
-                  label="Which best describes your status?                "
-                  select
-                  value={status}
-                  onChange={handleStatusChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                >
-                  <MenuItem value="1">I'm ready to list with FreeLets</MenuItem>
-                  <MenuItem value="2">
-                    I want to learn more about FreeLets
-                  </MenuItem>
-                  <MenuItem value="3">
-                    I'm not sure if I'm ready to sell yet
-                  </MenuItem>
-                  <MenuItem value="4">Just curious about value</MenuItem>
-                </StyledTextField>
-                <Box width="100%">
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateTimePicker
-                      sx={{width: "100%", marginTop: 2 }}
-                      label="Preferred Call Date and Time"
-                      value={selectedDateTime}
-                      onChange={handleDateTimeChange}
-                    />
-                  </LocalizationProvider>
+
+              <Box marginTop={2} marginBottom={2}>
+                <Box display="flex" alignItems="center">
+                  <Checkbox
+                    // checked={termsAccepted}
+                    // onChange={handleTermsAcceptedChange}
+                    required
+                  />
+                  <Typography variant="body2">
+                    I accept the terms and conditions.
+                  </Typography>
                 </Box>
-                <Box marginTop={2} marginBottom={2}>
-                  <Box display="flex" alignItems="center">
-                    <Checkbox
-                      checked={termsAccepted}
-                      onChange={handleTermsAcceptedChange}
-                      required
-                    />
-                    <Typography variant="body2">
-                      I accept the terms and conditions.
-                    </Typography>
+              </Box>
+
+              <input type="hidden" name="address" value={queryValue} />
+
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                style={{ borderRadius: 0, marginTop: 20 }}
+                disabled={loading}
+              >
+                {loading ? (
+                  <Box width="100%">
+                    <CircularProgress color="primary" />
                   </Box>
-                </Box>
-                <input type="hidden" name="address" value={queryValue} />
-                <Button
-                  variant="contained"
-                  type="submit"
-                  fullWidth
-                  style={{ borderRadius: 0 }}
-                >
-                  Submit
-                </Button>
-              </form>
-            )}
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+            </form>
           </Box>
         </Grid>
       </Grid>
     </Box>
   );
-}
+};
 
 export { BookValuationRegistration };
