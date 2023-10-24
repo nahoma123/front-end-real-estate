@@ -1,24 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  Alert,
   Box,
   Button,
   Checkbox,
   CircularProgress,
   Grid,
   MenuItem,
+  Snackbar,
   Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import TextFieldWithValidation from "../../components/common/TextFieldWithValidation";
 import DateTimePickerWithValidation from "../../components/common/DateTimePicker";
 import { validationRules } from "utils/validationRules";
+import { registerUser, submitBookingRequest } from "services/apiService";
+import { useNavigate } from "react-router-dom";
 
 type BookValuationRegistrationProps = {};
 
 type FormInputs = {
+  address: string;
   fullName: string;
   email: string;
   phoneNumber: string;
@@ -31,25 +35,66 @@ const BookValuationRegistration: React.FC<
   BookValuationRegistrationProps
 > = () => {
   const { handleSubmit, control } = useForm<FormInputs>();
+  const [address, setAddress] = useState("");
+  const navigate = useNavigate();
 
-  const location = useLocation();
+  useEffect(() => {
+    let address = sessionStorage.getItem("address");
+    if (address == null) {
+      setAddress("");
+    } else {
+      setAddress(address);
+    }
+  }, []);
+
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null); // State variable for error message
 
-  const onSubmit = handleSubmit((data) => {
-    setLoading(true);
-    console.log(data);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false); // State variable for snackbar visibility
+  const [fieldError, setFieldError] = useState<string | null>(null); // State variable for field error message
 
-    // Perform form submission logic here
-    // Simulating an asynchronous operation with setTimeout
-    setTimeout(() => {
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      setLoading(true);
+      let time = data.selectedDateTime?.toISOString();
+      sessionStorage.setItem(
+        "selected_datetime",
+        time === undefined ? "" : time
+      );
+
+      let bookingRequest = {
+        address: address,
+        why_joined: parseInt(data.status),
+        full_name: data.fullName,
+        email: data.email,
+        phone_number: data.phoneNumber,
+        preferred_time: time,
+      };
+      await submitBookingRequest(bookingRequest);
+
+      setIsSuccess(true);
+      navigate("/book_valuation_registration_confirmation");
+    } catch (error: any) {
+      // Handle registration error (e.g., display error message)
+      console.log("-Error-");
+      // console.log(error.response?.data); // Log the response data
+      if (error?.error?.field_error) {
+        // If field errors are present
+        const fieldErrors = error.error.field_error;
+        const firstFieldError = fieldErrors[0]; // Get the first field error
+        setFieldError(
+          `${firstFieldError.name}: ${firstFieldError.description}`
+        ); // Set the field error message
+        setSnackbarOpen(true); // Open the snackbar
+      } else {
+        setError(error?.error?.message); // Set the general error message
+        setSnackbarOpen(true); // Open the snackbar
+      }
+    } finally {
       setLoading(false);
-      // Additional logic after form submission
-    }, 2000);
+    }
   });
-
-  // Get the value from the route query
-  const searchParams = new URLSearchParams(location.search);
-  const queryValue = searchParams.get("value") || "";
 
   return (
     <Box>
@@ -149,8 +194,6 @@ const BookValuationRegistration: React.FC<
                 </Box>
               </Box>
 
-              <input type="hidden" name="address" value={queryValue} />
-
               <Button
                 type="submit"
                 variant="contained"
@@ -170,6 +213,32 @@ const BookValuationRegistration: React.FC<
           </Box>
         </Grid>
       </Grid>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+        message={error}
+      >
+        <Alert severity="error">{`${error}`}</Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={isSuccess}
+        autoHideDuration={6000}
+        onClose={() => setIsSuccess(false)}
+        message="Registered successfully"
+      >
+        <Alert severity="success">Registered successfully!</Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+        message={error || fieldError}
+      >
+        <Alert severity="error">{error || fieldError}</Alert>
+      </Snackbar>
     </Box>
   );
 };

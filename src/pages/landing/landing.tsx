@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import AdvCarousel from "../../components/pages/land_lord_dashboard/carousel/carousel";
 import SavingsCalculator from "../../components/presentational/saving/saving";
-import ImgFixedHeight from "../../components/presentational/image/fixed_height_img";
 import { OnboardingModalWrapper } from "../../components/presentational/model/onboarding_call";
 import BlockBar from "../../components/pages/land_lord_dashboard/AdvBar/adv_bar";
 import Offers from "../../components/presentational/offers/offers";
@@ -135,7 +134,7 @@ const LandingPage: React.FC = () => {
             </Grid>
             <Grid md={7}>
               <Box display={"flex"}>
-                <img src={HeroImg} width="100%" />
+                <img src={HeroImg} width="100%" alt="hero"/>
               </Box>
             </Grid>
           </Grid>

@@ -60,6 +60,7 @@ function BookValuation({}: BookValuationProps) {
   const handleAddressClick = (address: string) => {
     setSelectedAddress(address);
     setIsModalOpen(false);
+    sessionStorage.setItem('address', address)
     navigate(`/book_valuation_registration?value=${postcode}`);
   };
 

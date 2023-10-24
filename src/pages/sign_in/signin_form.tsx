@@ -44,6 +44,7 @@ const LoginForm: React.FC = () => {
           defaultValue=""
           rules={validationRules.email}
           label="Email"
+          fullWidth
         />
 
         <PasswordFieldWithValidation

@@ -4,6 +4,7 @@ import {
   LOGIN_URL,
   FORGOT_REQUEST_URL,
   VERIFY_FORGOT_REQUEST_URL,
+  ADD_VALUATION_URL,
 } from "constants/api";
 import {
   ApiOptions,
@@ -57,6 +58,7 @@ export async function registerUser(
   return response;
 }
 
+
 export async function loginUser(email: string, password: string): Promise<any> {
   const body = { email, password };
   const response = await callApi<any>(LOGIN_URL, "POST", body);
@@ -97,6 +99,5 @@ export async function resetPassword(
 export async function submitBookingRequest(
   valuation: BookingValuationData
 ): Promise<void> {
-  const RESET_PASSWORD_URL = VERIFY_FORGOT_REQUEST_URL;
-  await callApi<void>(RESET_PASSWORD_URL, "POST", valuation);
+  await callApi<void>(ADD_VALUATION_URL, "POST", valuation);
 }

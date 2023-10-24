@@ -43,12 +43,12 @@ interface RegisterUserResponse {
 }
 
 interface BookingValuationData {
+  address: string;
+  full_name: string;
   email: string;
-  password: string;
-  phone: string;
-  first_name: string;
-  middle_name: string;
-  last_name: string;
+  phone_number: string;
+  why_joined: number;
+  preferred_time: string | undefined;
 }
 
 export type {

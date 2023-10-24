@@ -1,6 +1,5 @@
 import { Box, Container, createTheme, ThemeProvider } from "@mui/material";
 import LandingPage from "./pages/landing/landing";
-import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import { HomePage } from './pages/HomePage/HomePage';
 import { MainLayout } from "./components/layouts/MainLayout";
@@ -11,12 +10,10 @@ import { AuthContainer } from "./pages/sign_in/signin_page";
 import FlexibleImgComponent from "./components/presentational/image/flexible_img";
 import LoginMemberShip from "./assets/images/login_membership.jpg";
 import {
-  useQuery,
-  useMutation,
-  useQueryClient,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { BookValuationRegistrationConfirmation } from "./pages/book_valuation/book_valuation_confirmation";
 
 function About() {
   return (
@@ -110,6 +107,15 @@ function App(): JSX.Element {
               element={
                 <SecondaryLayout>
                   <BookValuationRegistration />
+                </SecondaryLayout>
+              }
+            />
+
+            <Route
+              path="/book_valuation_registration_confirmation"
+              element={
+                <SecondaryLayout>
+                  <BookValuationRegistrationConfirmation />
                 </SecondaryLayout>
               }
             />
