@@ -7,9 +7,12 @@ const FORGOT_REQUEST_URL: string = AddBase("users/request_forgot_password");
 const VERIFY_FORGOT_REQUEST_URL: string = AddBase(
   "users/verify_forgot_password"
 );
+const CHANGE_PASSWORD_URL: string = AddBase(
+  "users/verify_reset_code"
+);
 
 function AddBase(route: string): string {
-  return `${BASE_URL}${route}`;
+  return `${route}`;
 }
 function GetAddressUrl(add: string): string {
   return `https://api.getaddress.io/autocomplete/${add}?api-key=GHeGqytMc0a-hF9okte62A40746`;
@@ -21,5 +24,7 @@ export {
   FORGOT_REQUEST_URL,
   VERIFY_FORGOT_REQUEST_URL,
   ADD_VALUATION_URL,
+  CHANGE_PASSWORD_URL,
   GetAddressUrl,
+  BASE_URL
 };

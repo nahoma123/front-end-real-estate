@@ -9,11 +9,9 @@ import { BookValuationRegistration } from "./pages/book_valuation/book_valuation
 import { AuthContainer } from "./pages/sign_in/signin_page";
 import FlexibleImgComponent from "./components/presentational/image/flexible_img";
 import LoginMemberShip from "./assets/images/login_membership.jpg";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BookValuationRegistrationConfirmation } from "./pages/book_valuation/book_valuation_confirmation";
+import { ChangePassword } from "./pages/sign_in/changePassword";
 
 function About() {
   return (

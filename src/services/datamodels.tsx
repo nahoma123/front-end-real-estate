@@ -51,6 +51,22 @@ interface BookingValuationData {
   preferred_time: string | undefined;
 }
 
+export interface UserResponse {
+  id:          number;
+  user_id:     string;
+  first_name:  string;
+  middle_name: string;
+  last_name:   string;
+  email:       string;
+  reset_code:  number;
+  phone:       string;
+  password:    string;
+  status:      string;
+  role:        string;
+  created_at:  Date;
+  updated_at:  Date;
+}
+
 export type {
   ErrorResponse,
   ApiOptions,

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
-import { LockOpen, Login } from "@mui/icons-material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Login } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 type BookValuationRegistrationConfirmationProps = {};
 
@@ -32,7 +32,7 @@ const BookValuationRegistrationConfirmation: React.FC<
   const [selectedDatetime, setSelectedDatetime] = useState("");
   const [address, setAddress] = useState("");
   const [formattedDate, setFormattedDate] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     let address = sessionStorage.getItem("address");
@@ -112,9 +112,8 @@ const BookValuationRegistrationConfirmation: React.FC<
               variant="contained"
               style={{ borderRadius: "0px", marginTop: "20px" }}
               fullWidth
-              onClick={()=> navigate("/sign_in")}
+              onClick={() => navigate("/sign_in")}
               startIcon={<Login />}
-
             >
               Login to Freelets
             </Button>

@@ -7,6 +7,7 @@ import TextFieldWithValidation from "../../components/common/TextFieldWithValida
 import PasswordFieldWithValidation from "../../components/common/PasswordFieldWithValidation";
 import ErrorSnackbar from "../../components/common/ErrorSnackbar";
 import { validationRules } from "utils/validationRules";
+import { useNavigate } from "react-router-dom";
 
 type LoginFormInputs = {
   email: string;
@@ -21,13 +22,21 @@ const LoginForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null); // State variable for error message
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false); // State variable for snackbar visibility
+  const navigate = useNavigate()
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsSubmitting(true);
-      await loginUser(data.email, data.password);
-      console.log("Login successful!");
+      const responseData = await loginUser(data.email, data.password);
+      localStorage.setItem("token", responseData?.data?.token)
+      localStorage.setItem("user", JSON.stringify(responseData?.data?.user))
+      if (responseData?.data?.user?.role === "ADMIN_ROLE"){
+        navigate("/admin_dashboard")
+      }else{
+        navigate("/landlord_tenant")
+      }
     } catch (error: any) {
+      console.log(error)
       setError(error?.error?.message); // Set the error message
       setSnackbarOpen(true); // Open the snackbar
     } finally {

@@ -6,6 +6,8 @@ import { ForgotPasswordForm } from "./forgotPassword";
 import FlexibleImgComponent from "../../components/presentational/image/flexible_img";
 // import { ForgotPassword } from "./ForgotPassword";
 import ProfileIcon from "../../assets/images/user_profile.png";
+import { getSignedUser, isSignedIn } from "utils/credentials";
+import { ChangePassword } from "./changePassword";
 
 const AuthContainer = () => {
   const [activeForm, setActiveForm] = useState("login");
@@ -33,60 +35,90 @@ const AuthContainer = () => {
               align="center"
               gutterBottom
             >
-              Welcome to our FreeLets!
+              {!isSignedIn()
+                ? "Welcome to our FreeLets!"
+                : `Hello ${getSignedUser()?.first_name} ${
+                    getSignedUser()?.last_name
+                  }`}
             </Typography>
           </Box>
-          <Box margin={3}>
-            {activeForm === "login" && <LoginForm />}
-            {activeForm === "register" && <RegisterForm />}
-            {activeForm === "forgotPassword" && <ForgotPasswordForm />}
-          </Box>
-          <Box margin={3} display="flex" justifyContent="space-between">
-            {activeForm !== "login" && (
-              <Button
-                variant="text"
-                color="primary"
-                sx={{ fontSize:"initial", textTransform: "none", backgroundColor: "transparent", color: "black", cursor: "pointer" }}
-                style={{
-                  backgroundColor: "transparent",
-                  color: "black",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleFormChange("login")}
-              >
-                Back to Login
-              </Button>
-            )}
-            {activeForm !== "register" && (
-              <Button
-                variant="text"
-                sx={{ fontSize:"initial", textTransform: "none", backgroundColor: "transparent", color: "black", cursor: "pointer" }}
-                style={{
-                  backgroundColor: "transparent",
-                  color: "black",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleFormChange("register")}
-              >
-                Don't have an account? Register here.
-              </Button>
-            )}
-            {activeForm !== "forgotPassword" && (
-              <Button
-                variant="text"
-                color="primary"
-                sx={{ fontSize:"initial", textTransform: "none", backgroundColor: "transparent", color: "black", cursor: "pointer" }}
-                style={{
-                  backgroundColor: "transparent",
-                  color: "black",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleFormChange("forgotPassword")}
-              >
-                Forgot Password
-              </Button>
-            )}
-          </Box>
+          {!isSignedIn() ? (
+            <>
+              <Box margin={3}>
+                {activeForm === "login" && <LoginForm />}
+                {activeForm === "register" && <RegisterForm />}
+                {activeForm === "forgotPassword" && <ForgotPasswordForm />}
+              </Box>
+              <Box margin={3} display="flex" justifyContent="space-between">
+                {activeForm !== "login" && (
+                  <Button
+                    variant="text"
+                    color="primary"
+                    sx={{
+                      fontSize: "initial",
+                      textTransform: "none",
+                      backgroundColor: "transparent",
+                      color: "black",
+                      cursor: "pointer",
+                    }}
+                    style={{
+                      backgroundColor: "transparent",
+                      color: "black",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleFormChange("login")}
+                  >
+                    Back to Login
+                  </Button>
+                )}
+                {activeForm !== "register" && (
+                  <Button
+                    variant="text"
+                    sx={{
+                      fontSize: "initial",
+                      textTransform: "none",
+                      backgroundColor: "transparent",
+                      color: "black",
+                      cursor: "pointer",
+                    }}
+                    style={{
+                      backgroundColor: "transparent",
+                      color: "black",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleFormChange("register")}
+                  >
+                    Don't have an account? Register here.
+                  </Button>
+                )}
+                {activeForm !== "forgotPassword" && (
+                  <Button
+                    variant="text"
+                    color="primary"
+                    sx={{
+                      fontSize: "initial",
+                      textTransform: "none",
+                      backgroundColor: "transparent",
+                      color: "black",
+                      cursor: "pointer",
+                    }}
+                    style={{
+                      backgroundColor: "transparent",
+                      color: "black",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleFormChange("forgotPassword")}
+                  >
+                    Forgot Password
+                  </Button>
+                )}
+              </Box>
+            </>
+          ) : (
+            <Box>
+              <ChangePassword />
+            </Box>
+          )}
         </Grid>
       </Grid>
     </Box>

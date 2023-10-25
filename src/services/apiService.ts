@@ -6,6 +6,7 @@ import {
   VERIFY_FORGOT_REQUEST_URL,
   ADD_VALUATION_URL,
 } from "constants/api";
+import axiosInstance from "utils/axios";
 import {
   ApiOptions,
   ErrorResponse,
@@ -33,7 +34,7 @@ async function callApi<T>(
   };
 
   try {
-    const response: AxiosResponse<T> = await axios(requestOptions);
+    const response: AxiosResponse<T> = await axiosInstance(requestOptions);
 
     return response.data;
   } catch (error: any) {
@@ -92,6 +93,15 @@ export async function resetPassword(
   await callApi<void>(RESET_PASSWORD_URL, "POST", {
     email,
     reset_code: parseInt(reset_code.toString()), // Convert reset_code to a number
+    password,
+  });
+}
+
+export async function changePassword(
+  password: string
+): Promise<void> {
+  const RESET_PASSWORD_URL = VERIFY_FORGOT_REQUEST_URL;
+  await callApi<void>(RESET_PASSWORD_URL, "POST", {
     password,
   });
 }

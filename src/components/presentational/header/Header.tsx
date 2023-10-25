@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AppBar, Toolbar, Button, Grid, styled } from "@mui/material";
 
 import LogoImg from "../logo/image";
@@ -9,6 +9,8 @@ import {
   StyledDropdown,
 } from "../header_menu/header_menu";
 import { useNavigate } from "react-router-dom";
+import { ObjectType } from "typescript";
+import { Person3Outlined, SupervisedUserCircleOutlined } from "@mui/icons-material";
 const StyledAppBar = styled(AppBar)({
   backgroundColor: "#fff",
   color: "#fff",
@@ -19,6 +21,7 @@ const StyledButton2 = styled(Button)({
   height: "60%",
   fontFamily: "Open Sans",
   margin: "0px",
+  minWidth: "150px",
   fontWeight: "bold",
   backgroundColor: "#948c1e45",
   color: "#948c1e",
@@ -33,6 +36,14 @@ const StyledGrid = styled(Grid)({});
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState<any>();
+  useEffect(() => {
+    let user = localStorage.getItem("user");
+    if (user != null) {
+      let userObject = JSON.parse(user) 
+      setUser(userObject);
+    }
+  },[]);
 
   return (
     <StyledAppBar position="fixed">
@@ -86,9 +97,22 @@ const Header: React.FC = () => {
             justifyContent="center"
             alignContent={"center"}
           >
-            <StyledButton2 endIcon={<LoginIcon fontSize="small" />} onClick={()=> navigate("/sign_in")}>
-              Sign In/ Register
-            </StyledButton2>
+            {user == null ? (
+              <StyledButton2
+                endIcon={<LoginIcon fontSize="small" />}
+                onClick={() => navigate("/sign_in")}
+              >
+                Sign In/ Register
+              </StyledButton2>
+            ) : 
+            (
+              <StyledButton2
+                endIcon={<Person3Outlined fontSize="medium" />}
+                onClick={() => navigate("/sign_in")}
+              >
+                {(user?.last_name)}
+              </StyledButton2>
+            )}
           </Grid>
         </Grid>
       </Toolbar>
