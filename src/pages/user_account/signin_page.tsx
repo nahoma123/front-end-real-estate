@@ -44,7 +44,7 @@ const AuthContainer = () => {
           </Box>
           {!isSignedIn() ? (
             <>
-              <Box margin={3}>
+              <Box margin={3} marginTop={1}>
                 {activeForm === "login" && <LoginForm />}
                 {activeForm === "register" && <RegisterForm />}
                 {activeForm === "forgotPassword" && <ForgotPasswordForm />}

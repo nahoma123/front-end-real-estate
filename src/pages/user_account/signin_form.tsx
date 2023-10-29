@@ -31,13 +31,17 @@ const LoginForm: React.FC = () => {
       localStorage.setItem("token", responseData?.data?.token)
       localStorage.setItem("user", JSON.stringify(responseData?.data?.user))
       if (responseData?.data?.user?.role === "ADMIN_ROLE"){
-        navigate("/admin_dashboard")
+        navigate("/admin_dashboard", {replace: true})
       }else{
-        navigate("/landlord_tenant")
+        navigate("/landlord_tenant", {replace: true})
       }
-    } catch (error: any) {
-      console.log(error)
-      setError(error?.error?.message); // Set the error message
+    } catch (err: any) {
+      console.log(err)
+      setError(err?.error?.message); // Set the error message
+      if (err?.error?.message===undefined){
+        setError("internet connection error")
+      }
+
       setSnackbarOpen(true); // Open the snackbar
     } finally {
       setIsSubmitting(false);

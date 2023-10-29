@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Alert, Box, Button, LinearProgress, Snackbar, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  LinearProgress,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { forgotPassword, resetPassword } from "../../services/apiService";
 import { LockOpen, Mail } from "@mui/icons-material";
@@ -19,7 +27,7 @@ export function ForgotPasswordForm() {
     formState: { errors },
     getValues,
   } = useForm<ForgotPasswordFormInputs>();
-   
+
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -48,8 +56,12 @@ export function ForgotPasswordForm() {
         setPasswordResetSuccess(true);
         setShowPinForm(false);
       }
-    } catch (error: any) {
-      setError(error?.error?.message);
+    } catch (err: any) {
+      setError(err?.error?.message);
+      if (err?.error?.message === undefined) {
+        setError("internet connection error");
+      }
+
       setSnackbarOpen(true);
     } finally {
       setIsSubmitting(false);
@@ -143,7 +155,8 @@ export function ForgotPasswordForm() {
                 required: "Please verify your new password",
                 validate: {
                   passwordMatch: (value) =>
-                    value === getValues("newPassword") || "Passwords do not match",
+                    value === getValues("newPassword") ||
+                    "Passwords do not match",
                 },
               }}
               render={({ field }) => (
@@ -197,7 +210,12 @@ export function ForgotPasswordForm() {
 
       {/* Reset code sent message */}
       {resetCodeSent && (
-        <Typography variant="body2" color="textSecondary" padding={1} fontWeight={"bolder"}>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          padding={1}
+          fontWeight={"bolder"}
+        >
           Reset code has been sent to your email: {emailForMessage}
         </Typography>
       )}

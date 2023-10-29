@@ -53,8 +53,8 @@ export function ChangePassword() {
   });
 
   const logout = () => {
-    localStorage.removeItem("token")
-    localStorage.removeItem("user")
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     navigate("/");
   };
 
@@ -70,7 +70,7 @@ export function ChangePassword() {
       >
         Log Out
       </Button>
-
+      <Typography variant="h5" textAlign={"center"} m={2} fontWeight="bolder">Change password</Typography>
       <form onSubmit={onSubmit}>
         <>
           <Controller

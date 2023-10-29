@@ -52,22 +52,31 @@ export function RegisterForm() {
       // Handle successful registration (e.g., show success message, redirect)
       console.log("Registration successful!");
       setIsSuccess(true);
-    } catch (error: any) {
+    } catch (err: any) {
       // Handle registration error (e.g., display error message)
       console.log("-Error-");
       // console.log(error.response?.data); // Log the response data
-      if (error?.error?.field_error) {
+      if (err?.error?.field_error) {
         // If field errors are present
-        const fieldErrors = error.error.field_error;
+        const fieldErrors = err.error.field_error;
         const firstFieldError = fieldErrors[0]; // Get the first field error
+
+        console.log(err)  
+        setSnackbarOpen(true); // Open the snackbar
+  
+
         setFieldError(
           `${firstFieldError.name}: ${firstFieldError.description}`
         ); // Set the field error message
         setSnackbarOpen(true); // Open the snackbar
       } else {
-        setError(error?.error?.message); // Set the general error message
         setSnackbarOpen(true); // Open the snackbar
       }
+      setError(err?.error?.message); // Set the error message
+      if (err?.error?.message===undefined){
+        setError("internet connection error")
+      }
+
     } finally {
       setIsSubmitting(false);
     }

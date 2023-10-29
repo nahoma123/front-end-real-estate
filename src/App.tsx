@@ -6,12 +6,12 @@ import { MainLayout } from "./components/layouts/MainLayout";
 import { SecondaryLayout } from "./components/layouts/SecondaryLayout";
 import { BookValuation } from "./pages/book_valuation/book_valuation";
 import { BookValuationRegistration } from "./pages/book_valuation/book_valuation_register";
-import { AuthContainer } from "./pages/sign_in/signin_page";
+import { AuthContainer } from "./pages/user_account/signin_page";
 import FlexibleImgComponent from "./components/presentational/image/flexible_img";
 import LoginMemberShip from "./assets/images/login_membership.jpg";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BookValuationRegistrationConfirmation } from "./pages/book_valuation/book_valuation_confirmation";
-import { ChangePassword } from "./pages/sign_in/changePassword";
+import FindProperties from "./pages/find_properties/findProperties";
 
 function About() {
   return (
@@ -84,7 +84,7 @@ function App(): JSX.Element {
               }
             />
             <Route
-              path="/sign_in"
+              path="/user_account"
               element={
                 <SecondaryLayout
                   dynamicComponent={
@@ -115,6 +115,17 @@ function App(): JSX.Element {
                 <SecondaryLayout>
                   <BookValuationRegistrationConfirmation />
                 </SecondaryLayout>
+              }
+            />
+            
+            <Route
+              path="/find_properties"
+              element={
+                <MainLayout>
+                  <UnContained>
+                    <FindProperties />
+                  </UnContained>
+                </MainLayout>
               }
             />
           </Routes>
