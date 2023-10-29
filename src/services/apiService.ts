@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
 import {
   REGISTER_URL,
   LOGIN_URL,
@@ -9,13 +9,12 @@ import {
 import axiosInstance from "utils/axios";
 import {
   ApiOptions,
-  ErrorResponse,
   RegisterUserData,
   RegisterUserResponse,
   BookingValuationData,
 } from "./datamodels";
 
-async function callApi<T>(
+export async function callApi<T>(
   url: string,
   method: string,
   body?: object,
@@ -59,7 +58,6 @@ export async function registerUser(
   return response;
 }
 
-
 export async function loginUser(email: string, password: string): Promise<any> {
   const body = { email, password };
   const response = await callApi<any>(LOGIN_URL, "POST", body);
@@ -97,9 +95,7 @@ export async function resetPassword(
   });
 }
 
-export async function changePassword(
-  password: string
-): Promise<void> {
+export async function changePassword(password: string): Promise<void> {
   const RESET_PASSWORD_URL = VERIFY_FORGOT_REQUEST_URL;
   await callApi<void>(RESET_PASSWORD_URL, "POST", {
     password,

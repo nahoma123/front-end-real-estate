@@ -13,9 +13,9 @@ import {
 } from "@mui/material";
 
 interface PropertyFilterData {
-  location: string;
-  minPrice?: number;
-  maxPrice?: number;
+  address: string;
+  minAmount?: number;
+  maxAmount?: number;
   minBeds?: number;
   maxBeds?: number;
   propertyTypes: string[];
@@ -29,7 +29,7 @@ interface PropertyFilterProps {
 }
 
 const PropertyFilter: React.FC<PropertyFilterProps> = ({ onSubmit }) => {
-  const { handleSubmit, control } = useForm<PropertyFilterData>();
+  const { handleSubmit, control, formState } = useForm<PropertyFilterData>();
 
   const handleFormSubmit = (data: PropertyFilterData) => {
     onSubmit(data);
@@ -45,35 +45,44 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={2}>
           <Controller
-            name="location"
+            name="address"
             control={control}
-            rules={{ required: true }}
+            rules={{ required: "Address is required" }}
             render={({ field }) => (
-              <TextField label="Location" {...field} fullWidth />
+              <TextField
+                label="Address"
+                value={field.value || ""}
+                onChange={(e) => field.onChange(e.target.value)}
+                onBlur={field.onBlur}
+                error={!!formState.errors?.address} // Access field error via formState.errors
+                helperText={formState.errors?.address?.message || ""}
+                fullWidth
+                required
+              />
             )}
           />
         </Grid>
-        <Grid item xs={6} md={4}>
+        <Grid item xs={6} md={2}>
           <Controller
-            name="minPrice"
+            name="minAmount"
             control={control}
             render={({ field }) => (
-              <TextField label="Min Price" {...field} fullWidth />
+              <TextField label="Min Amount" {...field} fullWidth />
             )}
           />
         </Grid>
-        <Grid item xs={6} md={4}>
+        <Grid item xs={6} md={2}>
           <Controller
-            name="maxPrice"
+            name="maxAmount"
             control={control}
             render={({ field }) => (
-              <TextField label="Max Price" {...field} fullWidth />
+              <TextField label="Max Amount" {...field} fullWidth />
             )}
           />
         </Grid>
-        <Grid item xs={6} md={4}>
+        <Grid item xs={6} md={2}>
           <Controller
             name="minBeds"
             control={control}
@@ -82,7 +91,7 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onSubmit }) => {
             )}
           />
         </Grid>
-        <Grid item xs={6} md={4}>
+        <Grid item xs={6} md={2}>
           <Controller
             name="maxBeds"
             control={control}
@@ -91,7 +100,7 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onSubmit }) => {
             )}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={6} md={2}>
           <FormControl fullWidth>
             <Controller
               control={control}
@@ -120,7 +129,7 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onSubmit }) => {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={6} md={2}>
           <FormControl fullWidth>
             <Controller
               name="mustHaves"
@@ -149,7 +158,7 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onSubmit }) => {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={6} md={2}>
           <FormControl fullWidth>
             <InputLabel>Furnished</InputLabel>
             <Controller
@@ -166,7 +175,7 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onSubmit }) => {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6} md={2}>
           <FormControlLabel
             control={
               <Controller
@@ -178,10 +187,17 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onSubmit }) => {
             label="Student Properties"
           />
         </Grid>
+        <Grid item xs={6} md={3} display="flex" padding={1} alignItems="center" justifyContent={"center"}>
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            style={{ borderRadius: "0px" }}
+          >
+            Find Properties
+          </Button>
+        </Grid>
       </Grid>
-      <Button type="submit" variant="contained" fullWidth>
-        Filter
-      </Button>
     </form>
   );
 };
